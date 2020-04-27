@@ -137,7 +137,7 @@ linter:
     - prefer_const_constructors
     - prefer_const_constructors_in_immutables
     - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
+    # - prefer_const_literals_to_create_immutables # I comment out
     # - prefer_constructors_over_static_methods # not yet tested
     - prefer_contains
     # - prefer_double_quotes # opposite of prefer_single_quotes
