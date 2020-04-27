@@ -29,9 +29,9 @@ class _CheckHubHomeState extends State<CheckHubHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CheckHub'),
+        title: const Text('CheckHub'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Hello! CheckHub'),
       ),
     );
