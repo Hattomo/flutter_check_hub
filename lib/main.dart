@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/pages/data_type_setting.dart';
+import 'package:flutter_check_hub/pages/edit_item_home.dart';
+import 'package:flutter_check_hub/pages/graph_home.dart';
+import 'package:flutter_check_hub/pages/manage_item_home.dart';
 import 'package:flutter_check_hub/pages/record_home.dart';
+import 'package:flutter_check_hub/pages/repeat_setting.dart';
 import 'package:flutter_check_hub/pages/settings.dart';
 import 'package:flutter_check_hub/service/date_time.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +23,14 @@ class CheckHub extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SafeArea(child: CheckHubHome()),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/': (BuildContext context) => CheckHubHome(),
+        '/manageItemHome': (BuildContext context) => ManageItemHome(),
+        '/editItemHome': (BuildContext context) => EditItemHome(),
+        '/dataTypeSetting': (BuildContext context) => DataTypeSetting(),
+        '/repeatSetting': (BuildContext context) => RepeatSetting()
+      },
     );
   }
 }
@@ -36,7 +48,7 @@ class _CheckHubHomeState extends State<CheckHubHome>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
     dateTimeManager = DateTimeManager();
   }
 
@@ -50,64 +62,72 @@ class _CheckHubHomeState extends State<CheckHubHome>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
+      length: 3,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.grey[100],
+          appBar: AppBar(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                IconButton(
+                    icon: const Icon(Icons.arrow_back_ios),
+                    onPressed: () {
+                      dateTimeManager.subtractDate();
+                    }),
+                StreamBuilder<DateTime>(
+                    stream: dateTimeManager.dateStream,
+                    initialData: dateTimeManager.selectedDate,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<DateTime> snapshot) {
+                      return Column(
+                        children: <Widget>[
+                          Text(DateFormat('EEEE')
+                              .format(dateTimeManager.selectedDate)),
+                          Text(DateFormat('MMM d y')
+                              .format(dateTimeManager.selectedDate)),
+                        ],
+                      );
+                    }),
+                IconButton(
+                    icon: const Icon(Icons.arrow_forward_ios),
+                    onPressed: () {
+                      dateTimeManager.addDate();
+                    }),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            controller: _tabController,
             children: <Widget>[
-              IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    dateTimeManager.subtractDate();
-                  }),
-              StreamBuilder<DateTime>(
-                  stream: dateTimeManager.dateStream,
-                  initialData: dateTimeManager.selectedDate,
-                  builder:
-                      (BuildContext context, AsyncSnapshot<DateTime> snapshot) {
-                    return Column(
-                      children: <Widget>[
-                        Text(DateFormat('EEEE')
-                            .format(dateTimeManager.selectedDate)),
-                        Text(DateFormat('MMM d y')
-                            .format(dateTimeManager.selectedDate)),
-                      ],
-                    );
-                  }),
-              IconButton(
-                  icon: const Icon(Icons.arrow_forward_ios),
-                  onPressed: () {
-                    dateTimeManager.addDate();
-                  }),
+              RecordHome(),
+              GraphHome(),
+              Settings(),
             ],
           ),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            RecordHome(),
-            Settings(),
-          ],
-        ),
-        bottomNavigationBar: SafeArea(
-          child: TabBar(
-            controller: _tabController,
-            indicatorWeight: 2.0,
-            labelColor: Colors.blue,
-            unselectedLabelColor: Colors.grey,
-            unselectedLabelStyle: const TextStyle(fontSize: 12.0),
-            tabs: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.layers),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(Icons.settings),
-              ),
-            ],
+          bottomNavigationBar: SafeArea(
+            child: TabBar(
+              controller: _tabController,
+              indicatorWeight: 2.0,
+              labelColor: Colors.blue,
+              unselectedLabelColor: Colors.grey,
+              unselectedLabelStyle: const TextStyle(fontSize: 12.0),
+              tabs: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.layers),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.insert_chart),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Icon(Icons.settings),
+                ),
+              ],
+            ),
           ),
         ),
       ),
