@@ -85,6 +85,7 @@ class _CheckHubHomeState extends State<CheckHubHome>
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: <Widget>[
             RecordHome(),
             Settings(),
