@@ -6,12 +6,14 @@ class Item {
     this.repeat,
     this.goal,
     this.icon,
+    this.id,
   });
 
-  String title;
-  int dataType;
+  dynamic title;
+  dynamic dataType;
   String unit;
   int repeat; // It is not decided yet
   String goal; //It is not decided yet
   String icon;
+  dynamic id;
 }

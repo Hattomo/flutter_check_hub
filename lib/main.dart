@@ -21,7 +21,7 @@ class CheckHub extends StatelessWidget {
       title: 'CheckHub',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        //visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{

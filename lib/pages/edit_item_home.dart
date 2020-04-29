@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/service/database.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
 
 class EditItemHome extends StatefulWidget {
@@ -9,6 +10,7 @@ class EditItemHome extends StatefulWidget {
 class _EditItemHomeState extends State<EditItemHome> {
   String currenttitle;
   String currentunit;
+  final DatabaseOperater _databaseOperater=DatabaseOperater(DatabaseFactory());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,7 +36,9 @@ class _EditItemHomeState extends State<EditItemHome> {
         actions: <Widget>[
           FlatButton(
             child: const Text('Done'),
-            onPressed: () {},
+            onPressed: () async {
+              await _databaseOperater.save(0,'ttt');
+            },
           ),
         ],
       ),
