@@ -23,9 +23,9 @@ class DatabaseFactory {
 
 class DatabaseService {
   DatabaseFactory databaseFactory = DatabaseFactory();
-  static const String _tablename = 'items';
-  static const String _title = 'title';
-  static const String _id = 'id';
+  static const _tablename = 'items';
+  static const _title = 'title';
+  static const _id = 'id';
   //static const _data = 'data';
 
   Database _db;
@@ -46,16 +46,16 @@ class DatabaseService {
   }
 
   Future<Item> fetch(int id) async {
-    final List<Map<String, dynamic>> maps = await _db.query(
+    final List<Map> maps = await _db.query(
       _tablename,
       columns: <String>[_id, _title],
       where: '$_id=?',
-      whereArgs: <dynamic>[id],
+      whereArgs: <int>[id],
     );
     if (maps.isNotEmpty) {
       return Item(
-        id: maps.first[_id],
-        title: maps.first[_title],
+        id: maps.first['id'],
+        title: maps.first['title'],
       );
     }
     return null;
@@ -76,7 +76,7 @@ class DatabaseService {
         _id: id,
         _title: title,
       },
-      where: '_id= ?',
+      where: 'id= ?',
       whereArgs: <int>[id],
     );
   }

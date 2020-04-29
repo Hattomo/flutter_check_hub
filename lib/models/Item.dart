@@ -9,11 +9,11 @@ class Item {
     this.id,
   });
 
-  dynamic title;
-  dynamic dataType;
+  String title;
+  int dataType;
   String unit;
   int repeat; // It is not decided yet
   String goal; //It is not decided yet
   String icon;
-  dynamic id;
+  int id;
 }

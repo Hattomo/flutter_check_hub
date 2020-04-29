@@ -18,13 +18,13 @@ class _ManageItemHomeState extends State<ManageItemHome> {
       ),
       body: FutureBuilder<dynamic>(
         future: data,
-        builder: (BuildContext context, AsyncSnapshot<dynamic>snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              return const Text('Error Occ');
+              return const Text('Error Occur');
             }
             if (!snapshot.hasData) {
-              return const Center(child:Text('Let\'s add Item!'));
+              return const Center(child: Text('Let\'s add Item!'));
             }
             return Text('${snapshot.data.title}');
           } else {

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-class DataTypeSetting extends StatelessWidget {
+class DataTypeSetting extends StatefulWidget {
+  @override
+  _DataTypeSettingState createState() => _DataTypeSettingState();
+}
+
+class _DataTypeSettingState extends State<DataTypeSetting> {
+  List<bool> isSelected = List<bool>.generate(10, (index) => false);
+
   @override
   Widget build(BuildContext context) {
     final List<String> title = <String>[
@@ -24,7 +31,21 @@ class DataTypeSetting extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(title[index]),
-              onTap: () {},
+              trailing: isSelected[index]
+                  ? Icon(
+                      Icons.check,
+                      color: Colors.blue,
+                    )
+                  : null,
+              onTap: () => setState(() {
+                for (int i = 0; i < isSelected.length; i++) {
+                  if (i == index) {
+                    isSelected[i] = true;
+                  } else {
+                    isSelected[i] = false;
+                  }
+                }
+              }),
             );
           }),
     );

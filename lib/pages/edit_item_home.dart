@@ -10,7 +10,8 @@ class EditItemHome extends StatefulWidget {
 class _EditItemHomeState extends State<EditItemHome> {
   String currenttitle;
   String currentunit;
-  final DatabaseOperater _databaseOperater=DatabaseOperater(DatabaseFactory());
+  final DatabaseOperater _databaseOperater =
+      DatabaseOperater(DatabaseFactory());
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -30,14 +31,14 @@ class _EditItemHomeState extends State<EditItemHome> {
       appBar: AppBar(
         title: const Text('Edit Item'),
         leading: FlatButton(
-          child: const Text('Cancel'),
+          child: const Icon(Icons.cancel),
           onPressed: () => Navigator.pop(context),
         ),
         actions: <Widget>[
           FlatButton(
             child: const Text('Done'),
             onPressed: () async {
-              await _databaseOperater.save(0,'ttt');
+              await _databaseOperater.save(0, currenttitle);
             },
           ),
         ],
@@ -47,12 +48,14 @@ class _EditItemHomeState extends State<EditItemHome> {
         child: ListView(
           children: <Widget>[
             ListTile(
-                title: TextFormField(
-              decoration: textInputDecoration.copyWith(hintText: 'Title 🚀'),
-              validator: (String val) =>
-                  val.isEmpty ? 'Please enter a title' : null,
-              onChanged: (String val) => setState(() => currenttitle = val),
-            )),
+              title: TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'Title 🚀'),
+                validator: (String val) =>
+                    val.isEmpty ? 'Please enter a title' : null,
+                onChanged: (String val) => setState(() => currenttitle = val),
+              ),
+              leading: Icon(Icons.title),
+            ),
             ListTile(
               title: const Text('Data Type'),
               leading: const Icon(Icons.style),
@@ -61,17 +64,23 @@ class _EditItemHomeState extends State<EditItemHome> {
               onTap: () => Navigator.pushNamed(context, '/dataTypeSetting'),
             ),
             ListTile(
+                leading: Icon(Icons.ac_unit),
                 title: TextFormField(
-              decoration: textInputDecoration.copyWith(hintText: 'Unit 🐣'),
-              validator: (String val) =>
-                  val.isEmpty ? 'Please enter a title' : null,
-              onChanged: (String val) => setState(() => currenttitle = val),
-            )),
+                  decoration: textInputDecoration.copyWith(hintText: 'Unit 🐣'),
+                  validator: (String val) =>
+                      val.isEmpty ? 'Please enter a title' : null,
+                  onChanged: (String val) => setState(() => currenttitle = val),
+                )),
             ListTile(
               leading: const Icon(Icons.insert_emoticon),
-              title: const Text('Icon'),
-              trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () => showIconSetting(),
+              title: TextFormField(
+                decoration: textInputDecoration.copyWith(
+                    hintText: 'Please add one emoji 😀'),
+                validator: (String val) =>
+                    val.isEmpty ? 'Please enter a title' : null,
+                onChanged: (String val) => setState(() => currenttitle = val),
+              ),
             ),
             ListTile(
               leading: const Icon(Icons.repeat),
