@@ -9,9 +9,7 @@ import 'package:flutter_check_hub/pages/settings.dart';
 import 'package:flutter_check_hub/service/date_time.dart';
 import 'package:intl/intl.dart';
 
-void main() {
-  runApp(CheckHub());
-}
+void main() => runApp(CheckHub());
 
 class CheckHub extends StatelessWidget {
   @override

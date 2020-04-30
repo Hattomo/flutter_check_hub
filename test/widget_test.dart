@@ -5,12 +5,21 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
+//import 'package:flutter_check_hub/service/date_time.dart';
+import 'package:flutter_check_hub/service/datebase_key.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_check_hub/main.dart';
+//import 'package:flutter_check_hub/main.dart';
 
 void main() {
+  test('daytime2int', () {
+    final databaseKey = DatabaseKey();
+    final int value = databaseKey.datetimetKeyFormatter(DateTime(2020, 4, 30));
+    expect(value, 20200430);
+  });
+
+  /*
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(CheckHub());
@@ -27,4 +36,5 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });
+  */
 }
