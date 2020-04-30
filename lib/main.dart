@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_check_hub/pages/data_type_setting.dart';
-import 'package:flutter_check_hub/pages/edit_item_home.dart';
-import 'package:flutter_check_hub/pages/graph_home.dart';
-import 'package:flutter_check_hub/pages/manage_item_home.dart';
-import 'package:flutter_check_hub/pages/record_home.dart';
-import 'package:flutter_check_hub/pages/repeat_setting.dart';
-import 'package:flutter_check_hub/pages/settings.dart';
+import 'package:flutter_check_hub/pages/graph/graph_home.dart';
+import 'package:flutter_check_hub/pages/setting/data_type_setting.dart';
+import 'package:flutter_check_hub/pages/setting/edit_item_home.dart';
+import 'package:flutter_check_hub/pages/setting/manage_item_home.dart';
+import 'package:flutter_check_hub/pages/setting/record_home.dart';
+import 'package:flutter_check_hub/pages/setting/repeat_setting.dart';
+import 'package:flutter_check_hub/pages/setting/settings.dart';
 import 'package:flutter_check_hub/service/date_time.dart';
 import 'package:intl/intl.dart';
 
