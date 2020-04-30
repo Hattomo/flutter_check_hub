@@ -29,6 +29,4 @@ jobs:
       #- run: flutter  config --enable-windows-desktop
       
       - run: flutter pub get
-      
-      # Do not hava any tests yet
-      #- run: flutter test
+      - run: flutter test
