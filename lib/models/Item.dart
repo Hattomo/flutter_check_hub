@@ -1,19 +1,19 @@
 class Item {
   Item({
-    this.title,
-//    this.dataType,
-//    this.unit,
-//    this.repeat,
-//    this.goal,
-//    this.icon,
-    this.id,
+    this.date,
+    this.data,
   });
 
-  String title;
-//  int dataType;
-//  String unit;
-//  int repeat; // It is not decided yet
-//  String goal; //It is not decided yet
-  String icon;
-  int id;
+  String date;
+  String data;
+}
+
+class ItemData {
+  ItemData({
+    this.date,
+    this.data,
+  });
+
+  String date;
+  String data;
 }

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/pages/setting/item_list.dart';
+import 'package:flutter_check_hub/service/data_store_service.dart';
+import 'package:provider/provider.dart';
 
 class RecordHome extends StatefulWidget {
   @override
@@ -8,8 +12,12 @@ class RecordHome extends StatefulWidget {
 class _RecordHomeState extends State<RecordHome> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(),
+    return StreamProvider<List<Item>>.value(
+      value: DatabaseServiceItem().items,
+      child: Container(
+        child:ItemList(),
+      ),
+
     );
   }
 }
