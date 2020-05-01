@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/Item.dart';
-import 'package:flutter_check_hub/pages/setting/item_list.dart';
+import 'package:flutter_check_hub/pages/recordhome/item_list.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:provider/provider.dart';
 

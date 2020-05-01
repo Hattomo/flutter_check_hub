@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/Item.dart';
-import 'package:flutter_check_hub/pages/setting/item_tile.dart';
+import 'package:flutter_check_hub/pages/recordhome/item_tile.dart';
 import 'package:provider/provider.dart';
 
 
