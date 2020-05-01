@@ -32,7 +32,7 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
             return ListTile(
               title: Text(title[index]),
               trailing: isSelected[index]
-                  ? Icon(
+                  ? const Icon(
                       Icons.check,
                       color: Colors.blue,
                     )

@@ -11,7 +11,7 @@ class _ManageItemHomeState extends State<ManageItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    final Future<dynamic> data = databaseOperater.fecth(0);
+    final Future<dynamic> data = databaseOperater.fecth('おおお');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Manage Items'),
@@ -26,7 +26,12 @@ class _ManageItemHomeState extends State<ManageItemHome> {
             if (!snapshot.hasData) {
               return const Center(child: Text('Let\'s add Item!'));
             }
-            return Text('${snapshot.data.title}');
+            return ListTile(
+              title: Text(
+                '${snapshot.data.tablename}',
+              ),
+              subtitle: Text('${snapshot.data.dataType}'),
+            );
           } else {
             return const CircularProgressIndicator();
           }

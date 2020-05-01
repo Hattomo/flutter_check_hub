@@ -88,7 +88,7 @@ class _RepeatDaysTileState extends State<RepeatDaysTile> {
     return ListTile(
       title: Text(widget.option),
       trailing: widget.isSelected
-          ? Icon(
+          ? const Icon(
               Icons.check,
               color: Colors.blue,
             )

@@ -79,13 +79,16 @@ class _CheckHubHomeState extends State<CheckHubHome>
                     initialData: dateTimeManager.selectedDate,
                     builder: (BuildContext context,
                         AsyncSnapshot<DateTime> snapshot) {
-                      return Column(
-                        children: <Widget>[
-                          Text(DateFormat('EEEE')
-                              .format(dateTimeManager.selectedDate)),
-                          Text(DateFormat('MMM d y')
-                              .format(dateTimeManager.selectedDate)),
-                        ],
+                      return InkWell(
+                        onTap: () {},
+                        child: Column(
+                          children: <Widget>[
+                            Text(DateFormat('EEEE')
+                                .format(dateTimeManager.selectedDate)),
+                            Text(DateFormat('MMM d y')
+                                .format(dateTimeManager.selectedDate)),
+                          ],
+                        ),
                       );
                     }),
                 IconButton(

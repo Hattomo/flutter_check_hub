@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/models/data_type.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseFactory {
   Future<Database> create() async {
     return await openDatabase(
-      join(await getDatabasesPath(), 'database.db'),
+      join(await getDatabasesPath(), 'database2.db'),
       onCreate: (Database db, int version) async {
         return db.execute(
-          '''create table items (
-          id int primary key,
-          title text
+          '''create table datatable (
+          tableName text primary key,
+          dataType int
           )''',
         );
       },
@@ -23,10 +23,10 @@ class DatabaseFactory {
 
 class DatabaseService {
   DatabaseFactory databaseFactory = DatabaseFactory();
-  static const _tablename = 'items';
-  static const _title = 'title';
-  static const _id = 'id';
-  //static const _data = 'data';
+  static const String _tablename = 'datatable';
+  static const String _titlecolumn = 'tablename';
+  static const String _dataType = 'dataType';
+  //static const _id = 'id';
 
   Database _db;
 
@@ -34,50 +34,55 @@ class DatabaseService {
     _db = await databaseFactory.create();
   }
 
-  Future<void> insert(int id, String title) async {
+  Future<void> insert(int dataType, String titlecolumn) async {
     await _db.insert(
       _tablename,
       <String, dynamic>{
-        _id: id,
-        _title: title,
+        _titlecolumn: titlecolumn,
+        _dataType: dataType,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<Item> fetch(int id) async {
-    final List<Map> maps = await _db.query(
-      _tablename,
-      columns: <String>[_id, _title],
-      where: '$_id=?',
-      whereArgs: <int>[id],
-    );
-    if (maps.isNotEmpty) {
-      return Item(
-        id: maps.first['id'],
-        title: maps.first['title'],
+  Future<DataTable> fetch(String titlecolumn) async {
+    try {
+      final List<Map> maps = await _db.query(
+        _tablename,
+        columns: <String>[_dataType, _titlecolumn],
+        where: '$_titlecolumn=?',
+        whereArgs: <String>[titlecolumn],
       );
+      if (maps.isNotEmpty) {
+        return DataTable(
+          dataType: maps.first['dataType'],
+          tablename: maps.first['tableName'],
+        );
+      }
+      return null;
+    } on Exception catch (e) {
+      print(e);
     }
     return null;
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(String titlecolumn) async {
     await _db.delete(
-      _tablename,
-      where: 'id = ?',
-      whereArgs: <int>[id],
+      _dataType,
+      where: 'titlecolumn = ?',
+      whereArgs: <String>[titlecolumn],
     );
   }
 
-  Future<void> update(int id, String title) async {
+  Future<void> update(int dataType, String titlecolumn) async {
     await _db.update(
-      _tablename,
+      _dataType,
       <String, dynamic>{
-        _id: id,
-        _title: title,
+        _dataType: dataType,
+        _titlecolumn: titlecolumn,
       },
-      where: 'id= ?',
-      whereArgs: <int>[id],
+      where: 'titlecolumn= ?',
+      whereArgs: <String>[titlecolumn],
     );
   }
 
@@ -88,29 +93,29 @@ class DatabaseOperater {
   DatabaseOperater(this.databaseFactory);
   DatabaseFactory databaseFactory;
 
-  Future<void> save(int id, String title) async {
+  Future<void> save(int dataType, String titlecolumn) async {
     final DatabaseService databaseService = DatabaseService();
     try {
       await databaseService.open();
-      final Item result = await databaseService.fetch(id);
+      final DataTable result = await databaseService.fetch(titlecolumn);
       if (result == null)
-        await databaseService.insert(id, title);
+        await databaseService.insert(dataType, titlecolumn);
       else
-        await databaseService.update(id, title);
+        await databaseService.update(dataType, titlecolumn);
     } on Exception catch (e) {
       print(e);
     } finally {
-      print(await databaseService.fetch(id));
+      print(await databaseService.fetch(titlecolumn));
       await databaseService.close();
     }
   }
 
-  Future<Item> fecth(int id) async {
+  Future<DataTable> fecth(String titlecoumn) async {
     final DatabaseService databaseService = DatabaseService();
     try {
       await databaseService.open();
-      print(await databaseService.fetch(id));
-      return await databaseService.fetch(id);
+      print(await databaseService.fetch(titlecoumn));
+      return await databaseService.fetch(titlecoumn);
     } on Exception catch (e) {
       print(e);
     } finally {
@@ -119,11 +124,11 @@ class DatabaseOperater {
     return null;
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(String titlecolumn) async {
     final DatabaseService databaseService = DatabaseService();
     try {
       await DatabaseService().open();
-      await DatabaseService().delete(id);
+      await DatabaseService().delete(titlecolumn);
     } on Exception catch (e) {
       print(e);
     } finally {
