@@ -10,9 +10,9 @@ jobs:
         os: [ubuntu-latest]
     #Identifies any jobs that must complete successfully before this job will run.
 
-    name: Build  apk
     steps:
-      - uses: actions/checkout@v1
+      - name: Set up environment
+        uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
           channel: 'beta'
@@ -28,7 +28,14 @@ jobs:
       #- run: flutter  config --enable-macos-desktop
       #- run: flutter  config --enable-windows-desktop
       
-      - run: flutter pub get
+      # copy google service.json
+      - name: Decode google-service.json
+        env:
+          GOOGLE_SERVICE: ${{secrets.GOOGLE_SERVICES_JSON}}
+        run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./android/app/google-services.json
+      
+      - name: pub get 
+        run: flutter pub get
       
       # Do not have test code
       #- run: flutter test
@@ -36,8 +43,8 @@ jobs:
       # build macOS desktop version
       #- run: flutter build macos --release
 
-      # build Android version
-      - run: flutter build apk
+      - name: build Android apk
+        run: flutter build apk
       # This action will create a github release and optionally upload an artifact to it.
       # https://github.com/ncipollo/release-action
       
