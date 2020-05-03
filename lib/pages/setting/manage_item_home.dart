@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/pages/recordhome/item_list.dart';
+import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:flutter_check_hub/service/database.dart';
+import 'package:provider/provider.dart';
 
 class ManageItemHome extends StatefulWidget {
   @override
@@ -11,31 +15,15 @@ class _ManageItemHomeState extends State<ManageItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    final Future<dynamic> data = databaseOperater.fecth('おおお');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Manage Items'),
       ),
-      body: FutureBuilder<dynamic>(
-        future: data,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return const Text('Error Occur');
-            }
-            if (!snapshot.hasData) {
-              return const Center(child: Text('Let\'s add Item!'));
-            }
-            return ListTile(
-              title: Text(
-                '${snapshot.data.tablename}',
-              ),
-              subtitle: Text('${snapshot.data.dataType}'),
-            );
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
+      body: StreamProvider<List<Item>>.value(
+        value: DatabaseServiceItem().items,
+        child: Container(
+          child:ItemList(),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
@@ -44,7 +32,7 @@ class _ManageItemHomeState extends State<ManageItemHome> {
             Radius.circular(8.0),
           ),
         ),
-        onPressed: () => Navigator.pushNamed(context, '/editItemHome'),
+        onPressed: () => Navigator.pushNamed(context, '/editItemHomeWrapper'),
       ),
     );
   }

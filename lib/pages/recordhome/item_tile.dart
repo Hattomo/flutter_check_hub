@@ -11,14 +11,16 @@ class ItemTile extends StatefulWidget {
 class _ItemTileState extends State<ItemTile> {
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: ListTile(
-        leading: CircleAvatar(
-          child: Text('&&'),
+        leading: const CircleAvatar(
+          child: Text('ttt'),
           backgroundColor: Colors.blue,
         ),
-        title: Text('###'),
+        title: const Text('###'),
+        trailing: const Icon(Icons.edit),
+        onTap: ()=>null,
       ),
     );
   }

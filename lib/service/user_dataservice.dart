@@ -2,21 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_check_hub/models/user.dart';
 
 class DatabaseServiceUser {
-  DatabaseServiceUser({this.titles});
-  final String titles;
+  DatabaseServiceUser({this.uid});
+  final String uid;
 
   // collection reference
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future<void> updateuserData(String uid, var name) async {
+  Future<void> updateuserData(var name) async {
     return await userCollection.document(uid).setData({
       'name': name,
     });
   }
 
   Future<void> createuserData(var name) async {
-    return await userCollection.document().setData({
+    return await userCollection.document(uid).setData({
       'name': name,
     });
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_check_hub/service/user_dataservice.dart';
+import 'package:flutter_check_hub/models/user.dart';
+import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
+import 'package:provider/provider.dart';
 
 class EditItemHome extends StatefulWidget {
   @override
@@ -12,11 +14,13 @@ class _EditItemHomeState extends State<EditItemHome> {
   String currentunit;
   String currentgoal;
   String currenticon;
-  final userDataService = DatabaseServiceUser();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  final dataServiceItem = DatabaseServiceItem();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Item'),
@@ -28,7 +32,7 @@ class _EditItemHomeState extends State<EditItemHome> {
           FlatButton(
             child: const Text('Done'),
             onPressed: () async {
-              await userDataService.createuserData('Sudy');
+              await dataServiceItem.createItemData(user.uid, 'Sudy', 'yy');
             },
           ),
         ],

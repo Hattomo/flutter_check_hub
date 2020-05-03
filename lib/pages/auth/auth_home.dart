@@ -5,7 +5,6 @@ import 'package:flutter_check_hub/service/auth_service.dart';
 import 'package:provider/provider.dart';
 
 class AuthHome extends StatelessWidget {
-  final User person = User();
   @override
   Widget build(BuildContext context) {
     return 
@@ -16,7 +15,6 @@ class AuthHome extends StatelessWidget {
             child: AuthWrapper(),
           ),
         ),
-
     );
   }
 }

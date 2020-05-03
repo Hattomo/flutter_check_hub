@@ -3,8 +3,9 @@ import 'package:flutter_check_hub/service/auth_service.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
 
+@immutable
 class SignIn extends StatefulWidget {
-  SignIn({this.toggleView});
+  const SignIn({this.toggleView});
   final Function toggleView;
 
 
