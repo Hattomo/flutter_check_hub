@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_check_hub/pages/setting/repeat_days.dart';
-import 'package:flutter_check_hub/pages/setting/repeat_weeks.dart';
+import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_days.dart';
+import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_weeks.dart';
 
 class RepeatSetting extends StatefulWidget {
   @override

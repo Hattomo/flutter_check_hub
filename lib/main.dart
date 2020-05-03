@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/pages/auth/auth_home.dart';
 import 'package:flutter_check_hub/pages/home.dart';
-import 'package:flutter_check_hub/pages/setting/data_type_setting.dart';
 import 'package:flutter_check_hub/pages/setting/edit_item_home_wrapper.dart';
+import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
+import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_setting.dart';
 import 'package:flutter_check_hub/pages/setting/manage_item_home.dart';
-import 'package:flutter_check_hub/pages/setting/repeat_setting.dart';
 
 void main() => runApp(CheckHub());
 
