@@ -9,15 +9,15 @@ class DatabaseServiceUser {
   final CollectionReference userCollection =
       Firestore.instance.collection('users');
 
-  Future<void> updateuserData(var name) async {
-    return await userCollection.document(uid).setData({
-      'name': name,
-    });
+  Future<void> updateuserData(String uid, List<String> itemid) async {
+    return await userCollection
+        .document(uid)
+        .setData({'itemsid': itemid, 'name': 'yy', uid: uid});
   }
 
-  Future<void> createuserData(var name) async {
+  Future<void> createuserData(String uid) async {
     return await userCollection.document(uid).setData({
-      'name': name,
+      'itemsid': [],
     });
   }
 
@@ -26,11 +26,30 @@ class DatabaseServiceUser {
     return await userCollection.document(user.uid).delete();
   }
 
-  Stream<User> user(User user) {
-    return userCollection.document(user.uid).snapshots().map((doc) {
-      return User(
-        name: doc.data['name'] ?? '',
-      );
-    });
+  Stream<UserData> user(User user) {
+    print('&&&&&');
+    try {
+      return userCollection
+          .document(user.uid)
+          .snapshots()
+          .map(_userDataFromSnapshot);
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    print(snapshot.data['itemsid']);
+    print(snapshot.data['uid']);
+    try {
+      return UserData(
+          itemsid: List.from(snapshot.data['itemsid']) ?? [' '],
+          uid: snapshot.data['uid'] ?? ' ',
+          name: snapshot.data['name'] ?? ' ');
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 }

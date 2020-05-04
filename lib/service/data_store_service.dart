@@ -3,32 +3,52 @@ import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
 
 class DatabaseServiceItem {
-  DatabaseServiceItem({this.date});
-  final databaseServiceUser = DatabaseServiceUser();
-  int idLength = 20;
-  final String date;
-
+  DatabaseServiceItem({this.itemid});
+  final DatabaseServiceUser databaseServiceUser = DatabaseServiceUser();
+  //await itemCollection.document(id).collection('data').document(date).setData({'date': date, 'data': data});
+  String itemid;
   // collection reference
   final CollectionReference itemCollection =
       Firestore.instance.collection('items');
 
-  Future<void> updateItemData(String uid, String date, var data) async {
-    return await itemCollection.document(uid).setData({
-      'date': date,
+  Future<void> updateItemData(
+      {String id,
+      String title,
+      var data,
+      String icon,
+      String unit,
+      int dataType}) async {
+    return await itemCollection.document(id).setData({
+      'title': title,
       'data': data,
+      'icon': icon,
+      'unit': unit,
+      'dataType': dataType
     });
   }
 
-  Future<void> createItemData(String uid, String date, var data) async {
+  Future<void> createItemData(
+      {String uid,
+      String title,
+      var data,
+      String icon,
+      String unit,
+      int dataType}) async {
     final String id = itemCollection.document().documentID;
     print(id);
-    await itemCollection.document(id).setData({'date': date, 'data': data});
-    databaseServiceUser.updateuserData(id);
+    await itemCollection.document(id).setData({
+      'title': title,
+      'data': data,
+      'icon': icon,
+      'unit': unit,
+      'dataType': dataType
+    });
+    databaseServiceUser.updateuserData(uid, [id]);
   }
 
-  Future<void> deleteItemData(Item item) async {
-    print(item.date);
-    return await itemCollection.document(item.date).delete();
+  Future<void> deleteItemData(String itemid) async {
+    //print(item.title);
+    return await itemCollection.document(itemid).delete();
   }
 
   // itemmodels list from snapshot
@@ -36,9 +56,11 @@ class DatabaseServiceItem {
     return snapshot.documents.map((doc) {
       //print(doc.data);
       return Item(
-        data: doc.data['data'] ?? '',
-        date: doc.data['date'] ?? '',
-      );
+          data: doc.data['data'] ?? '',
+          title: doc.data['title'] ?? '',
+          icon: doc.data['icon'] ?? '',
+          unit: doc.data['unit'] ?? '',
+          dataType: doc.data['dataType'] ?? -100);
     }).toList();
   }
 
@@ -46,21 +68,34 @@ class DatabaseServiceItem {
   ItemData _itemDataFromSnapshot(DocumentSnapshot snapshot) {
     return ItemData(
       data: snapshot.data['data'],
-      date: snapshot.data['date'],
+      title: snapshot.data['title'],
+      icon: snapshot.data['icon'] ?? '',
+      unit: snapshot.data['unit'] ?? '',
+      dataType: snapshot.data['dataType'] ?? '',
     );
   }
 
   // get itemmodels stream
 
   Stream<List<Item>> get items {
-    return itemCollection
-        //      .orderBy("data", descending: true)
-        .snapshots()
-        .map(_itemListFromSnapshot);
+    try {
+      return itemCollection
+          //.getDocuments(source:Source.cache)
+          //      .orderBy("data", descending: true)
+          .snapshots()
+          .map(_itemListFromSnapshot);
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   //get user doc stream
   Stream<ItemData> get itemData {
-    return itemCollection.document(date).snapshots().map(_itemDataFromSnapshot);
+    return itemCollection
+        .document(itemid)
+        //.get(source: Source.cache)
+        .snapshots()
+        .map(_itemDataFromSnapshot);
   }
 }

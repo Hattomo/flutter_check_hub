@@ -34,7 +34,8 @@ class _RegisterState extends State<Register> {
       body: loading
           ? const Text('Loading')
           : Container(
-              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -53,7 +54,8 @@ class _RegisterState extends State<Register> {
                       style: const TextStyle(color: Colors.black),
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Email'),
-                      validator: (String val) => val.isEmpty ? 'Enter an email' : null,
+                      validator: (String val) =>
+                          val.isEmpty ? 'Enter an email' : null,
                       onChanged: (String val) {
                         setState(() => email = val);
                       },
@@ -83,8 +85,12 @@ class _RegisterState extends State<Register> {
                           //print(password);
                           if (_formKey.currentState.validate()) {
                             setState(() => loading = true);
-                            await _auth
+                            final dynamic result = await _auth
                                 .registerWithEmailAndPassword(email, password);
+                            if (result != null) {
+                              //User user = User(uid: result.uid);
+                              databaseServiceUser.createuserData(result.uid);
+                            }
                           } else {
                             setState(() {
                               loading = false;

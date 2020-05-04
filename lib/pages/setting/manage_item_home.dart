@@ -22,7 +22,7 @@ class _ManageItemHomeState extends State<ManageItemHome> {
       body: StreamProvider<List<Item>>.value(
         value: DatabaseServiceItem().items,
         child: Container(
-          child:ItemList(),
+          child: ItemList(),
         ),
       ),
       floatingActionButton: FloatingActionButton(

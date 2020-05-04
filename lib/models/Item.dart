@@ -1,19 +1,31 @@
 class Item {
   Item({
-    this.date,
+    this.title,
     this.data,
+    this.icon,
+    this.dataType,
+    this.unit,
   });
 
-  String date;
-  String data;
+  String title;
+  var data;
+  String icon;
+  int dataType;
+  String unit;
 }
 
 class ItemData {
   ItemData({
-    this.date,
+    this.title,
     this.data,
+    this.icon,
+    this.dataType,
+    this.unit,
   });
 
-  String date;
-  String data;
+  String title;
+  var data;
+  String icon;
+  int dataType;
+  String unit;
 }

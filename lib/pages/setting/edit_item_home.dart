@@ -15,12 +15,17 @@ class _EditItemHomeState extends State<EditItemHome> {
   String currentgoal;
   String currenticon;
 
+  UserData user;
   final DatabaseServiceItem dataServiceItem = DatabaseServiceItem();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<User>(context);
+    final UserData user = Provider.of<UserData>(context)??UserData(uid: '',name: '',itemsid: ['']);
+    print(user);
+    print(user.uid);
+    print(user.name);
+    print(user.itemsid);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Item'),
@@ -32,7 +37,8 @@ class _EditItemHomeState extends State<EditItemHome> {
           FlatButton(
             child: const Text('Done'),
             onPressed: () async {
-              await dataServiceItem.createItemData(user.uid, 'Sudy', 'yy');
+              await dataServiceItem.createItemData(
+                  uid: user.uid, title: 'walk', data: 'yy');
             },
           ),
         ],

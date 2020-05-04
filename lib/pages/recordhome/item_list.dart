@@ -12,7 +12,7 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
-    final List<Item> items = Provider.of<List<Item>>(context) ?? <List<Item>>[];
+    final List<Item> items = Provider.of<List<Item>>(context) ?? [];
     print(items.length);
 
     /*

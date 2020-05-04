@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/user.dart';
+import 'package:flutter_check_hub/service/auth_service.dart';
 import 'package:package_info/package_info.dart';
+import 'package:provider/provider.dart';
 
+@immutable
 class Settings extends StatelessWidget {
+  final AuthService authService = AuthService();
   @override
   Widget build(BuildContext context) {
+    final User user = Provider.of<User>(context);
+    final String message = user.uid;
     Future<String> getinfo() async {
       final PackageInfo packageInfo = await PackageInfo.fromPlatform();
       //String appName = packageInfo.appName;
@@ -24,7 +31,8 @@ class Settings extends StatelessWidget {
             leading: const Icon(Icons.edit),
             title: const Text('Manage Item'),
             trailing: const Icon(Icons.arrow_forward_ios),
-            onTap: () => Navigator.pushNamed(context, '/manageItemHome'),
+            onTap: () => Navigator.pushNamed(context, '/manageItemHome',
+                arguments: message),
           ),
         ),
         Divider(
@@ -65,8 +73,14 @@ class Settings extends StatelessWidget {
         const SizedBox(height: 20.0),
         Container(
           color: Colors.white,
-          child: const ListTile(
-            leading: Text(''),
+          child: ListTile(
+            title: const Text(
+              'Sign out',
+              style: TextStyle(color: Colors.red),
+            ),
+            onTap: () async {
+              authService.signOut();
+            },
           ),
         ),
       ],
