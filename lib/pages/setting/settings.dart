@@ -52,7 +52,7 @@ class Settings extends StatelessWidget {
           child: ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('Version'),
-            trailing: FutureBuilder(
+            trailing: FutureBuilder<String>(
               future: getinfo(),
               builder: (BuildContext context, AsyncSnapshot<String> snapshot) =>
                   Text(

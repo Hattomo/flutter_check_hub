@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class AuthWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final User user = Provider.of<User>(context);
     //print('user:$user');
     // return either the plan or Authenticate widget
     if (user == null) {

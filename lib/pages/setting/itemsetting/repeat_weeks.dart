@@ -6,7 +6,7 @@ class RepeatWeeks extends StatefulWidget {
 }
 
 class _RepeatWeeksState extends State<RepeatWeeks> {
-  List<bool> isSelected = [false, false, false, false, false, false, false];
+  List<bool> isSelected = <bool>[false, false, false, false, false, false, false];
   @override
   Widget build(BuildContext context) {
     void chooseCallback(int index) {

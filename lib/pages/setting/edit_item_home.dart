@@ -15,12 +15,12 @@ class _EditItemHomeState extends State<EditItemHome> {
   String currentgoal;
   String currenticon;
 
-  final dataServiceItem = DatabaseServiceItem();
+  final DatabaseServiceItem dataServiceItem = DatabaseServiceItem();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<User>(context);
+    final User user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Item'),

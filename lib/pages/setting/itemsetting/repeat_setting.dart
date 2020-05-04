@@ -41,8 +41,8 @@ class _RepeatSettingState extends State<RepeatSetting> {
             const SizedBox(
               height: 10.0,
             ),
-            CupertinoSegmentedControl(
-              children: {
+            CupertinoSegmentedControl<int>(
+              children: <int, Widget>{
                 0: const Padding(
                     padding: EdgeInsets.only(left: 40.0, right: 40.0),
                     child: Text('Daily')),
@@ -53,7 +53,7 @@ class _RepeatSettingState extends State<RepeatSetting> {
                     padding: EdgeInsets.only(left: 30.0, right: 30.0),
                     child: Text('Interval')),
               },
-              onValueChanged: (index) {
+              onValueChanged: (int index) {
                 setState(() {
                   for (int buttonIndex = 0;
                       buttonIndex < _isSelected.length;

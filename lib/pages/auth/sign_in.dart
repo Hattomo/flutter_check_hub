@@ -17,7 +17,7 @@ class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final DatabaseServiceUser databaseServiceUser = DatabaseServiceUser();
   //unique key for form
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String error = '';
 
   //loading flag
@@ -57,9 +57,9 @@ class _SignInState extends State<SignIn> {
                         style: const TextStyle(color: Colors.black),
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Email'),
-                        validator: (val) =>
+                        validator: (String val) =>
                             val.isEmpty ? 'Enter an email' : null,
-                        onChanged: (val) {
+                        onChanged: (String val) {
                           setState(() => email = val);
                         },
                       ),
@@ -70,10 +70,10 @@ class _SignInState extends State<SignIn> {
                         decoration: textInputDecoration.copyWith(
                           hintText: 'Password',
                         ),
-                        validator: (val) => val.length < 6
+                        validator: (String val) => val.length < 6
                             ? 'Enter a password 6+ chars long'
                             : null,
-                        onChanged: (val) {
+                        onChanged: (String val) {
                           setState(() => password = val);
                         },
                       ),

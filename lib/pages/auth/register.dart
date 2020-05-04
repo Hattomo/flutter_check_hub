@@ -17,7 +17,7 @@ class _RegisterState extends State<Register> {
   final DatabaseServiceUser databaseServiceUser = DatabaseServiceUser();
 
   //unique key for each form
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String error = '';
 
   //loading flag
@@ -53,8 +53,8 @@ class _RegisterState extends State<Register> {
                       style: const TextStyle(color: Colors.black),
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Email'),
-                      validator: (val) => val.isEmpty ? 'Enter an email' : null,
-                      onChanged: (val) {
+                      validator: (String val) => val.isEmpty ? 'Enter an email' : null,
+                      onChanged: (String val) {
                         setState(() => email = val);
                       },
                     ),
@@ -63,11 +63,11 @@ class _RegisterState extends State<Register> {
                       style: const TextStyle(color: Colors.black),
                       decoration:
                           textInputDecoration.copyWith(hintText: 'Password'),
-                      validator: (val) => val.length < 6
+                      validator: (String val) => val.length < 6
                           ? 'Enter a password 6+ chars long'
                           : null,
                       obscureText: true,
-                      onChanged: (val) {
+                      onChanged: (String val) {
                         setState(() => password = val);
                       },
                     ),

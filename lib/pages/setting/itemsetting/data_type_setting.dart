@@ -6,7 +6,7 @@ class DataTypeSetting extends StatefulWidget {
 }
 
 class _DataTypeSettingState extends State<DataTypeSetting> {
-  List<bool> isSelected = List<bool>.generate(10, (index) => false);
+  List<bool> isSelected = List<bool>.generate(10, (int index) => false);
 
   @override
   Widget build(BuildContext context) {

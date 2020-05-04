@@ -12,7 +12,7 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
-    final items = Provider.of<List<Item>>(context) ?? [];
+    final List<Item> items = Provider.of<List<Item>>(context) ?? <List<Item>>[];
     print(items.length);
 
     /*
@@ -27,7 +27,7 @@ class _ItemListState extends State<ItemList> {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: items.length,
-      itemBuilder: (context, index) {
+      itemBuilder: (BuildContext context, int index) {
         return ItemTile(item: items[index]);
       },
     );

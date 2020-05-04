@@ -7,7 +7,7 @@ class RepeatDays extends StatefulWidget {
 }
 
 class _RepeatDaysState extends State<RepeatDays> {
-  List<bool> isSelected = List<bool>.generate(7, (index) => false);
+  List<bool> isSelected = List<bool>.generate(7, (int index) => false);
 
   @override
   Widget build(BuildContext context) {
