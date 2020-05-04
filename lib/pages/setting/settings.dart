@@ -71,16 +71,23 @@ class Settings extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20.0),
-        Container(
-          color: Colors.white,
-          child: ListTile(
-            title: const Text(
-              'Sign out',
-              style: TextStyle(color: Colors.red),
+        InkWell(
+          onTap: () async {
+            authService.signOut();
+          },
+          child: Container(
+            height: 50.0,
+            color: Colors.white,
+            child: const Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                    'Sign out',
+                    style: TextStyle(color: Colors.red),
+                  
+                ),
+              ),
             ),
-            onTap: () async {
-              authService.signOut();
-            },
           ),
         ),
       ],

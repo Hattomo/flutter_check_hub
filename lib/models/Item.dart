@@ -8,7 +8,7 @@ class Item {
   });
 
   String title;
-  var data;
+  dynamic data;
   String icon;
   int dataType;
   String unit;
@@ -24,7 +24,7 @@ class ItemData {
   });
 
   String title;
-  var data;
+  dynamic data;
   String icon;
   int dataType;
   String unit;

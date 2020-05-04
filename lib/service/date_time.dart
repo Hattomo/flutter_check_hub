@@ -14,10 +14,13 @@ class DateTimeManager {
   }
 
   void subtractDate() {
-    print(selectedDate);
     selectedDate = selectedDate.subtract(const Duration(days: 1));
     _dateStreamController.sink.add(selectedDate);
-    print(selectedDate);
+  }
+
+  void setDate(DateTime date) {
+    selectedDate = date;
+    _dateStreamController.sink.add(selectedDate);
   }
 
   void dispose() {
