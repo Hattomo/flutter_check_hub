@@ -20,7 +20,7 @@ class _ItemTileState extends State<ItemTile> {
         ),
         title: const Text('###'),
         trailing: const Icon(Icons.edit),
-        onTap: ()=>null,
+        onTap: () => null,
       ),
     );
   }

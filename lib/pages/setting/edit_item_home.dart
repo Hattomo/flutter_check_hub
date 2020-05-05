@@ -21,7 +21,8 @@ class _EditItemHomeState extends State<EditItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    final UserData user = Provider.of<UserData>(context)??UserData(uid: '',name: '',itemsid: ['']);
+    final UserData user = Provider.of<UserData>(context) ??
+        UserData(uid: '', name: '', itemsid: ['']);
     print(user);
     print(user.uid);
     print(user.name);

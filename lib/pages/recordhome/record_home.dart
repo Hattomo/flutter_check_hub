@@ -15,9 +15,8 @@ class _RecordHomeState extends State<RecordHome> {
     return StreamProvider<List<Item>>.value(
       value: DatabaseServiceItem().items,
       child: Container(
-        child:ItemList(),
+        child: ItemList(),
       ),
-
     );
   }
 }

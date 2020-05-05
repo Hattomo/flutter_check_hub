@@ -3,7 +3,6 @@ import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/pages/recordhome/item_tile.dart';
 import 'package:provider/provider.dart';
 
-
 class ItemList extends StatefulWidget {
   @override
   _ItemListState createState() => _ItemListState();

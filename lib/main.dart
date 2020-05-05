@@ -20,7 +20,7 @@ class CheckHub extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/':(BuildContext context)=>AuthHome(),
+        '/': (BuildContext context) => AuthHome(),
         '/checkHubHome': (BuildContext context) => CheckHubHome(),
         '/manageItemHome': (BuildContext context) => ManageItemHome(),
         '/editItemHomeWrapper': (BuildContext context) => EditItemHomeWrapper(),

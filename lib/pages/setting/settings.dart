@@ -82,9 +82,8 @@ class Settings extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                    'Sign out',
-                    style: TextStyle(color: Colors.red),
-                  
+                  'Sign out',
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
             ),
