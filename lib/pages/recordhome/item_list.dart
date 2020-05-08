@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/recordhome/item_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +11,8 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
-    final List<Item> items = Provider.of<List<Item>>(context) ?? [];
-    print(items.length);
+    final UserData userdata = Provider.of<UserData>(context) ?? UserData();
+    print(userdata.itemstitle.length);
 
     /*
     items.forEach((item) {
@@ -25,9 +25,11 @@ class _ItemListState extends State<ItemList> {
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: items.length,
+      itemCount: userdata.itemstitle.length ?? 0,
       itemBuilder: (BuildContext context, int index) {
-        return ItemTile(item: items[index]);
+        return ItemTile(
+            itemtitle: userdata.itemstitle[index],
+            itemicon: userdata.itemsicon[index]);
       },
     );
   }

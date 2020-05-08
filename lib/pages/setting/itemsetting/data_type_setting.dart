@@ -22,8 +22,33 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
       'Text',
       'Countup'
     ];
+
+    int getindex() {
+      int index = -1;
+      for (int i=0; i < 10; i++) {
+        if (isSelected[i] == true) {
+          print(i);
+          index = i;
+        }
+      }
+      return index;
+    }
+
     return Scaffold(
       appBar: AppBar(
+        leading: Center(
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            ),
+            onPressed: () async{
+              final int index = getindex();
+              Navigator.pop<int>(context, index);
+            },
+          ),
+        ),
+        centerTitle: true,
         title: const Text('Data Type'),
       ),
       body: ListView.builder(

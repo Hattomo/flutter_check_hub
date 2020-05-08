@@ -82,7 +82,7 @@ class RepeatWeeksTile extends StatefulWidget {
 class _RepeatWeeksTileState extends State<RepeatWeeksTile> {
   @override
   Widget build(BuildContext context) {
-    print(widget.isSelected);
+    //print(widget.isSelected);
     return ListTile(
         title: Text(widget.option),
         trailing: widget.isSelected

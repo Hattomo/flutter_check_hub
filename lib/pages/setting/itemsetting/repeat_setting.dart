@@ -28,10 +28,28 @@ class _RepeatSettingState extends State<RepeatSetting> {
     )
   ];
 
+  int getIndex() {
+    int index = -1;
+    return index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          leading: Center(
+            child: IconButton(
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+              onPressed: () async {
+                final index = getIndex();
+                Navigator.pop<int>(context, index);
+              },
+            ),
+          ),
           title: const Text('Repeat Setting'),
         ),
         body: Column(

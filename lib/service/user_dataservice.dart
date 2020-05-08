@@ -27,7 +27,6 @@ class DatabaseServiceUser {
   }
 
   Stream<UserData> user(User user) {
-    print('&&&&&');
     try {
       return userCollection
           .document(user.uid)
@@ -42,9 +41,12 @@ class DatabaseServiceUser {
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     print(snapshot.data['itemsid']);
     print(snapshot.data['uid']);
+    print(snapshot.data['itemsname']);
     try {
       return UserData(
           itemsid: List.from(snapshot.data['itemsid']) ?? [' '],
+          itemstitle: List.from(snapshot.data['itemstitle']) ?? [' '],
+          itemsicon: List.from(snapshot.data['itemsicon'])??[' '],
           uid: snapshot.data['uid'] ?? ' ',
           name: snapshot.data['name'] ?? ' ');
     } catch (e) {
