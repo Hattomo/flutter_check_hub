@@ -27,7 +27,7 @@ class _EditItemHomeState extends State<EditItemHome> {
   Widget build(BuildContext context) {
     print(widget.user);
     print('user uid: ${widget.user.uid}');
-    print(widget.user.itemsid);
+    print('user itemsid: ${widget.user.itemsid}');
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(

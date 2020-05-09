@@ -151,7 +151,11 @@ class _CheckHubHomeState extends State<CheckHubHome>
             body: TabBarView(
               controller: _tabController,
               children: <Widget>[
-                RecordHome(),
+                StreamProvider.value(
+                  initialData: dateTimeManager.selectedDate,
+                  value: dateTimeManager.dateStream,
+                  child: RecordHome(),
+                ),
                 GraphHome(),
                 Settings(),
               ],

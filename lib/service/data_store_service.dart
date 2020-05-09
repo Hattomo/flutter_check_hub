@@ -109,4 +109,41 @@ class DatabaseServiceItem {
         .snapshots()
         .map(_itemDataFromSnapshot);
   }
+
+  Future<void> createItemDailyData(
+      String itemId, String documentId, var data) async {
+    await itemCollection
+        .document(itemId)
+        .collection('data')
+        .document(documentId)
+        .setData({
+      'data': data,
+    });
+  }
+
+  Future<void> updateItemDailyData(
+      String itemId, String documentId, var data) async {
+    await itemCollection
+        .document(itemId)
+        .collection('data')
+        .document(documentId)
+        .setData({
+      'data': data,
+    });
+  }
+
+  Future<void> deleteItemDailyData(String itemId, String documentId) async {
+    await itemCollection
+        .document(itemId)
+        .collection('data')
+        .document(documentId)
+        .delete();
+  }
+
+  Future<dynamic> readItemDailyData(String itemId, String documentId) async {
+    return Firestore.instance
+        .document(itemid)
+        .collection('data')
+        .document(documentId);
+  }
 }

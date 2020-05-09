@@ -50,9 +50,6 @@ class DatabaseServiceUser {
   }
 
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    print(snapshot.data['itemsid']);
-    print(snapshot.data['uid']);
-    print(snapshot.data['itemsname']);
     try {
       return UserData(
         itemsid: List.from(snapshot.data['itemsid']) ?? [' '],
