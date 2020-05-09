@@ -28,14 +28,20 @@ class DatabaseServiceItem {
   }
 
   Future<void> createItemData(
-      {String uid,
-      String title,
-      var data,
-      String icon,
-      String unit,
-      int dataType}) async {
+    String uid,
+    String title,
+    var data,
+    String icon,
+    String unit,
+    int dataType,
+    List<String> itemsid,
+    List<String> itemstitle,
+    List<String> itemsicon,
+  ) async {
     final String id = itemCollection.document().documentID;
-    print(id);
+    itemsid.add(id);
+    itemstitle.add(title);
+    itemsicon.add(icon);
     await itemCollection.document(id).setData({
       'title': title,
       'data': data,
@@ -43,7 +49,12 @@ class DatabaseServiceItem {
       'unit': unit,
       'dataType': dataType
     });
-    databaseServiceUser.updateuserData(uid, [id]);
+    databaseServiceUser.updateuserData(
+      uid,
+      itemsid,
+      itemstitle,
+      itemsicon,
+    );
   }
 
   Future<void> deleteItemData(String itemid) async {

@@ -22,12 +22,11 @@ class _EditItemHomeState extends State<EditItemHome> {
 
   final DatabaseServiceItem dataServiceItem = DatabaseServiceItem();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  
+
   @override
   Widget build(BuildContext context) {
     print(widget.user);
-    print(widget.user.uid);
-    print(widget.user.name);
+    print('user uid: ${widget.user.uid}');
     print(widget.user.itemsid);
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -56,7 +55,16 @@ class _EditItemHomeState extends State<EditItemHome> {
                     child: const Text('Done'),
                     onPressed: () async {
                       await dataServiceItem.createItemData(
-                          uid: widget.user.uid, title: 'walk', data: 'yy');
+                        widget.user.uid,
+                        'cook',
+                        'yy',
+                        '🎂',
+                        'kai',
+                        1,
+                        widget.user.itemsid,
+                        widget.user.itemstitle,
+                        widget.user.itemsicon,
+                      );
                     },
                   )
                 ],

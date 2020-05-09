@@ -28,11 +28,6 @@ class _RepeatSettingState extends State<RepeatSetting> {
     )
   ];
 
-  int getIndex() {
-    int index = -1;
-    return index;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +40,7 @@ class _RepeatSettingState extends State<RepeatSetting> {
                 color: Colors.white,
               ),
               onPressed: () async {
-                final index = getIndex();
+                const int index = -1;
                 Navigator.pop<int>(context, index);
               },
             ),

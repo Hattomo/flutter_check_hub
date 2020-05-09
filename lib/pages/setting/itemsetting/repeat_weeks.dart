@@ -26,37 +26,37 @@ class _RepeatWeeksState extends State<RepeatWeeks> {
       child: Column(
         children: <Widget>[
           RepeatWeeksTile(
-              option: '1 Weeks',
+              option: 'Every 1 Weeks',
               isSelected: isSelected[0],
               index: 0,
               callback: () => chooseCallback(0)),
           RepeatWeeksTile(
-              option: '2 Weeks',
+              option: 'Every 2 Weeks',
               isSelected: isSelected[1],
               index: 1,
               callback: () => chooseCallback(1)),
           RepeatWeeksTile(
-              option: '3 Weeks',
+              option: 'Every 3 Weeks',
               isSelected: isSelected[2],
               index: 2,
               callback: () => chooseCallback(2)),
           RepeatWeeksTile(
-              option: '4 Weeks',
+              option: 'Every 4 Weeks',
               isSelected: isSelected[3],
               index: 3,
               callback: () => chooseCallback(3)),
           RepeatWeeksTile(
-              option: '5 Weeks',
+              option: 'Every 5 Weeks',
               isSelected: isSelected[4],
               index: 4,
               callback: () => chooseCallback(4)),
           RepeatWeeksTile(
-              option: '6 Weeks',
+              option: 'Every 6 Weeks',
               isSelected: isSelected[5],
               index: 5,
               callback: () => chooseCallback(5)),
           RepeatWeeksTile(
-              option: '7 Weeks',
+              option: 'Every 7 Weeks',
               isSelected: isSelected[6],
               index: 6,
               callback: () => chooseCallback(6)),

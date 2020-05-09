@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/recordhome/item_tile.dart';
@@ -12,7 +13,7 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     final UserData userdata = Provider.of<UserData>(context) ?? UserData();
-    print(userdata.itemstitle.length);
+    //print(userdata.itemstitle.length);
 
     /*
     items.forEach((item) {
@@ -21,16 +22,20 @@ class _ItemListState extends State<ItemList> {
     });
     */
 
-    return ListView.builder(
-      scrollDirection: Axis.vertical,
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: userdata.itemstitle.length ?? 0,
-      itemBuilder: (BuildContext context, int index) {
-        return ItemTile(
-            itemtitle: userdata.itemstitle[index],
-            itemicon: userdata.itemsicon[index]);
-      },
-    );
+    return userdata?.itemstitle?.length == null
+        ? const CupertinoActivityIndicator()
+        : ListView.builder(
+            scrollDirection: Axis.vertical,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: userdata.itemstitle.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ItemTile(
+                itemtitle: userdata.itemstitle[index],
+                itemicon: userdata.itemsicon[index] ??
+                    const CupertinoActivityIndicator(),
+              );
+            },
+          );
   }
 }
