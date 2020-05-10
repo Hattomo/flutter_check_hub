@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/models/user.dart';
+import 'package:flutter_check_hub/pages/setting/edit_item_home.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:flutter_check_hub/service/datebase_key.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
@@ -7,10 +10,8 @@ import 'package:provider/provider.dart';
 
 @immutable
 class ItemTile extends StatefulWidget {
-  const ItemTile({this.itemId, this.itemtitle, this.itemicon});
-  final String itemtitle;
-  final String itemicon;
-  final String itemId;
+  const ItemTile({this.itemdata});
+  final ItemData itemdata;
   @override
   _ItemTileState createState() => _ItemTileState();
 }
@@ -76,12 +77,10 @@ class _ItemTileState extends State<ItemTile> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             databaseServiceItem.createItemDailyData(
-                                widget.itemId,
+                                widget.itemdata.id,
                                 databaseKey.datetimetKeyFormatter(dateTime),
                                 currentdata);
-                            setState(() {
-                              
-                            });
+                            setState(() {});
                             Navigator.pop(context);
                           }
                         },
@@ -97,12 +96,57 @@ class _ItemTileState extends State<ItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    //final UserData user = Provider.of(context);
+    final UserData user = Provider.of(context);
+    void showEditItem() {
+      showModalBottomSheet(
+          backgroundColor: Colors.transparent,
+          isScrollControlled: true,
+          context: context,
+          builder: (maincontext) {
+            return Provider.value(
+              value: widget.itemdata,
+              child: Container(
+                color: Colors.grey[200],
+                height: MediaQuery.of(context).size.height,
+                child: EditItemHome(
+                  user: user,
+                ),
+              ),
+            );
+          });
+    }
+
+    void showDeleteDailog() {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Do you really want to delete this ?'),
+                  ButtonBar(
+                    children: [
+                      FlatButton(
+                          child: const Text('Cancel'),
+                          onPressed: () => Navigator.pop(context)),
+                      FlatButton(
+                        child: const Text('Delete'),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          });
+    }
+
     final DateTime dateTime = Provider.of(context);
     String itemTextData;
     return FutureBuilder(
       future: databaseServiceItem.readItemDailyData(
-          widget.itemId, databaseKey.datetimetKeyFormatter(dateTime)),
+          widget.itemdata.id, databaseKey.datetimetKeyFormatter(dateTime)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -118,7 +162,7 @@ class _ItemTileState extends State<ItemTile> {
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
               leading: CircleAvatar(
-                child: Text(widget.itemicon),
+                child: Text(widget.itemdata.icon),
                 backgroundColor: Colors.blue,
               ),
               title: Column(
@@ -126,7 +170,7 @@ class _ItemTileState extends State<ItemTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.itemtitle,
+                    widget.itemdata.title,
                     style: const TextStyle(fontSize: 13.0),
                   ),
                   const SizedBox(
@@ -135,7 +179,43 @@ class _ItemTileState extends State<ItemTile> {
                   Text(itemTextData),
                 ],
               ),
-              trailing: Text(dateTime.toString()),
+              trailing: PopupMenuButton(
+                itemBuilder: (BuildContext context) {
+                  return [
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.edit),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          const Text('Edit'),
+                        ],
+                      ),
+                      value: 0,
+                    ),
+                    PopupMenuItem(
+                      child: Row(
+                        children: [
+                          const Icon(Icons.delete_forever),
+                          const SizedBox(
+                            width: 10.0,
+                          ),
+                          const Text('Delete')
+                        ],
+                      ),
+                      value: 1,
+                    ),
+                  ];
+                },
+                onSelected: (val) {
+                  if (val == 0) {
+                    showEditItem();
+                  } else if (val == 1) {
+                    showDeleteDailog();
+                  }
+                },
+              ),
               onTap: () => showNumberDialog(dateTime),
             ),
           );

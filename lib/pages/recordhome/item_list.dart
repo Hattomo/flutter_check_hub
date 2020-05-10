@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/recordhome/item_tile.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,9 @@ class _ItemListState extends State<ItemList> {
     */
 
     return userdata?.itemstitle?.length == null
-        ? Container(height: 100.0, child: const Center(child: CupertinoActivityIndicator()))
+        ? Container(
+            height: 100.0,
+            child: const Center(child: CupertinoActivityIndicator()))
         : ListView.builder(
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
@@ -31,10 +34,11 @@ class _ItemListState extends State<ItemList> {
             itemCount: userdata.itemstitle.length,
             itemBuilder: (BuildContext context, int index) {
               return ItemTile(
-                itemtitle: userdata.itemstitle[index],
-                itemicon: userdata.itemsicon[index] ,
-                itemId: userdata.itemsid[index],
-              );
+                  itemdata: ItemData(
+                title: userdata.itemstitle[index],
+                icon: userdata.itemsicon[index],
+                id: userdata.itemsid[index],
+              ));
             },
           );
   }

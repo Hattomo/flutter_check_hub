@@ -140,18 +140,19 @@ class DatabaseServiceItem {
   }
 
   Future<dynamic> readItemDailyData(String itemId, String documentId) async {
-    return await Firestore.instance
-        .collection('items/' + itemId + '/data')
-        .document(documentId)
-        .get()
-        .then((snapshot) {
-      if (snapshot.exists) {
-        //print('data: ${value.data}');
-        return snapshot.data['data'];
-      } else {
-        //print('No data');
-        return null;
-      }
-    });
+    try {
+      return await Firestore.instance
+          .collection('items/' + itemId + '/data')
+          .document(documentId)
+          .get(source: Source.serverAndCache)
+          .then((snapshot) {
+        if (snapshot.exists) {
+          //print('data: ${value.data}');
+          return snapshot.data['data'];
+        }
+      });
+    } catch (e) {
+      return 'NetWorkError';
+    }
   }
 }

@@ -5,6 +5,7 @@ class Item {
     this.icon,
     this.dataType,
     this.unit,
+    this.id,
   });
 
   String title;
@@ -12,6 +13,7 @@ class Item {
   String icon;
   int dataType;
   String unit;
+  String id;
 }
 
 class ItemData {
@@ -21,6 +23,7 @@ class ItemData {
     this.icon,
     this.dataType,
     this.unit,
+    this.id,
   });
 
   String title;
@@ -28,4 +31,5 @@ class ItemData {
   String icon;
   int dataType;
   String unit;
+  String id;
 }

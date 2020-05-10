@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/recordhome/item_list.dart';
-import 'package:flutter_check_hub/pages/setting/edit_item_home.dart';
+import 'package:flutter_check_hub/pages/setting/create_item_home.dart';
 import 'package:provider/provider.dart';
 
 class RecordHome extends StatefulWidget {
@@ -12,8 +12,8 @@ class RecordHome extends StatefulWidget {
 class _RecordHomeState extends State<RecordHome> {
   @override
   Widget build(BuildContext context) {
-    final UserData user = Provider.of<UserData>(context);
-    void showEditItem() {
+    final UserData user = Provider.of(context);
+    void showCreateItem() {
       showModalBottomSheet(
           backgroundColor: Colors.transparent,
           isScrollControlled: true,
@@ -22,64 +22,27 @@ class _RecordHomeState extends State<RecordHome> {
             return Container(
               color: Colors.grey[200],
               height: MediaQuery.of(context).size.height,
-              child: EditItemHome(
+              child: CreateItemHome(
                 user: user,
               ),
             );
           });
     }
 
-    return Column(
-      children: [
-        Container(
-          color: Colors.grey[200],
-          height: 50.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 2.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.delete_forever,
-                  ),
-                  onPressed: () => showEditItem(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 2.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                  ),
-                  onPressed: () => showEditItem(),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 2.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.share,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 2.0),
-                child: IconButton(
-                  icon: const Icon(
-                    Icons.add,
-                  ),
-                  onPressed: () {},
-                ),
-              )
-            ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Container(
+            child: ItemList(),
           ),
-        ),
-        Container(
-          child: ItemList(),
-        ),
-      ],
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8.0))),
+        onPressed: () => showCreateItem(),
+      ),
     );
   }
 }

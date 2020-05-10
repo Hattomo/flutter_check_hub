@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
-import 'package:provider/provider.dart';
 
 @immutable
-class EditItemHome extends StatefulWidget {
-  const EditItemHome({Key key, this.user}) : super(key: key);
+class CreateItemHome extends StatefulWidget {
+  const CreateItemHome({Key key, this.user}) : super(key: key);
   final UserData user;
   @override
-  _EditItemHomeState createState() => _EditItemHomeState();
+  _CreateItemHomeState createState() => _CreateItemHomeState();
 }
 
-class _EditItemHomeState extends State<EditItemHome> {
+class _CreateItemHomeState extends State<CreateItemHome> {
   String currenttitle;
   String currentunit;
   String currentgoal;
@@ -27,7 +25,6 @@ class _EditItemHomeState extends State<EditItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    final ItemData itemdata = Provider.of(context);
     print(widget.user);
     print('user uid: ${widget.user.uid}');
     print('user itemsid: ${widget.user.itemsid}');
@@ -51,7 +48,7 @@ class _EditItemHomeState extends State<EditItemHome> {
                     onPressed: () => Navigator.pop(context),
                   ),
                   const Text(
-                    'Edit Item',
+                    'Create Item',
                     style: TextStyle(fontSize: 20.0),
                   ),
                   FlatButton(
@@ -84,7 +81,6 @@ class _EditItemHomeState extends State<EditItemHome> {
                     color: Colors.white,
                     child: ListTile(
                       title: TextFormField(
-                        initialValue: itemdata.title,
                         decoration:
                             textInputDecoration.copyWith(hintText: 'Title 🚀'),
                         validator: (String val) =>
@@ -118,7 +114,6 @@ class _EditItemHomeState extends State<EditItemHome> {
                     child: ListTile(
                         leading: const Icon(Icons.ac_unit),
                         title: TextFormField(
-                          initialValue: itemdata.icon,
                           decoration:
                               textInputDecoration.copyWith(hintText: 'Unit 🐣'),
                           validator: (String val) =>
