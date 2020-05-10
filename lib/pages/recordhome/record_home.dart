@@ -41,6 +41,15 @@ class _RecordHomeState extends State<RecordHome> {
                 padding: const EdgeInsets.only(left: 2.0),
                 child: IconButton(
                   icon: const Icon(
+                    Icons.delete_forever,
+                  ),
+                  onPressed: () => showEditItem(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 2.0),
+                child: IconButton(
+                  icon: const Icon(
                     Icons.edit,
                   ),
                   onPressed: () => showEditItem(),

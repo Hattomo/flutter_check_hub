@@ -1,14 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
+import 'package:flutter_check_hub/service/datebase_key.dart';
 import 'package:flutter_check_hub/shared/text_input_decoration.dart';
 import 'package:provider/provider.dart';
 
 @immutable
 class ItemTile extends StatefulWidget {
-  const ItemTile({this.itemtitle, this.itemicon});
+  const ItemTile({this.itemId, this.itemtitle, this.itemicon});
   final String itemtitle;
   final String itemicon;
+  final String itemId;
   @override
   _ItemTileState createState() => _ItemTileState();
 }
@@ -16,9 +18,11 @@ class ItemTile extends StatefulWidget {
 class _ItemTileState extends State<ItemTile> {
   final _formKey = GlobalKey<FormState>();
   final DatabaseServiceItem databaseServiceItem = DatabaseServiceItem();
+  DatabaseKey databaseKey = DatabaseKey();
   bool _isAutovalidate = false;
 
-  void showNumberDialog() {
+  void showNumberDialog(DateTime dateTime) {
+    String currentdata;
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -44,16 +48,18 @@ class _ItemTileState extends State<ItemTile> {
                       }
                     },
                     child: TextFormField(
-                        autovalidate: _isAutovalidate,
-                        keyboardType: TextInputType.number,
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Input number'),
-                        validator: (value) {
-                          final double isDigitsOnly = double.tryParse(value);
-                          return isDigitsOnly == null
-                              ? 'Input needs to be digits only'
-                              : null;
-                        }),
+                      autovalidate: _isAutovalidate,
+                      keyboardType: TextInputType.number,
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Input number'),
+                      validator: (value) {
+                        final double isDigitsOnly = double.tryParse(value);
+                        return isDigitsOnly == null
+                            ? 'Input needs to be digits only'
+                            : null;
+                      },
+                      onChanged: (value) => setState(() => currentdata = value),
+                    ),
                   ),
                   const SizedBox(
                     height: 10.0,
@@ -68,7 +74,16 @@ class _ItemTileState extends State<ItemTile> {
                       FlatButton(
                         child: const Text('Done'),
                         onPressed: () async {
-                          if (_formKey.currentState.validate()) {}
+                          if (_formKey.currentState.validate()) {
+                            databaseServiceItem.createItemDailyData(
+                                widget.itemId,
+                                databaseKey.datetimetKeyFormatter(dateTime),
+                                currentdata);
+                            setState(() {
+                              
+                            });
+                            Navigator.pop(context);
+                          }
                         },
                       ),
                     ],
@@ -86,8 +101,8 @@ class _ItemTileState extends State<ItemTile> {
     final DateTime dateTime = Provider.of(context);
     String itemTextData;
     return FutureBuilder(
-      future:
-          databaseServiceItem.readItemDailyData(widget.itemtitle, '20200509'),
+      future: databaseServiceItem.readItemDailyData(
+          widget.itemId, databaseKey.datetimetKeyFormatter(dateTime)),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
@@ -121,11 +136,13 @@ class _ItemTileState extends State<ItemTile> {
                 ],
               ),
               trailing: Text(dateTime.toString()),
-              onTap: () => showNumberDialog(),
+              onTap: () => showNumberDialog(dateTime),
             ),
           );
         } else {
-          return const CupertinoActivityIndicator();
+          return Container(
+              height: 100.0,
+              child: const Center(child: CupertinoActivityIndicator()));
         }
       },
     );

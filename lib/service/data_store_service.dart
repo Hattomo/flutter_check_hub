@@ -5,7 +5,6 @@ import 'package:flutter_check_hub/service/user_dataservice.dart';
 class DatabaseServiceItem {
   DatabaseServiceItem({this.itemid});
   final DatabaseServiceUser databaseServiceUser = DatabaseServiceUser();
-  //await itemCollection.document(id).collection('data').document(date).setData({'date': date, 'data': data});
   String itemid;
   // collection reference
   final CollectionReference itemCollection =
@@ -141,9 +140,18 @@ class DatabaseServiceItem {
   }
 
   Future<dynamic> readItemDailyData(String itemId, String documentId) async {
-    return Firestore.instance
-        .document(itemid)
-        .collection('data')
-        .document(documentId);
+    return await Firestore.instance
+        .collection('items/' + itemId + '/data')
+        .document(documentId)
+        .get()
+        .then((snapshot) {
+      if (snapshot.exists) {
+        //print('data: ${value.data}');
+        return snapshot.data['data'];
+      } else {
+        //print('No data');
+        return null;
+      }
+    });
   }
 }

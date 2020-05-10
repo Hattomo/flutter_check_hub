@@ -4,7 +4,7 @@ class DateTimeManager {
   DateTime selectedDate = DateTime.now();
 
   final StreamController<DateTime> _dateStreamController =
-      StreamController<DateTime>();
+      StreamController<DateTime>.broadcast();
 
   Stream<DateTime> get dateStream => _dateStreamController.stream;
 

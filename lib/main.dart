@@ -4,8 +4,11 @@ import 'package:flutter_check_hub/pages/home.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_setting.dart';
 
-
-void main() => runApp(CheckHub());
+void main() {
+  //WidgetsFlutterBinding.ensureInitialized();
+  //SystemChrome.setEnabledSystemUIOverlays([]);
+  runApp(CheckHub());
+}
 
 class CheckHub extends StatelessWidget {
   @override

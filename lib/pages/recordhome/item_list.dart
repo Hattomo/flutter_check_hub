@@ -23,7 +23,7 @@ class _ItemListState extends State<ItemList> {
     */
 
     return userdata?.itemstitle?.length == null
-        ? const CupertinoActivityIndicator()
+        ? Container(height: 100.0, child: const Center(child: CupertinoActivityIndicator()))
         : ListView.builder(
             scrollDirection: Axis.vertical,
             physics: const NeverScrollableScrollPhysics(),
@@ -32,8 +32,8 @@ class _ItemListState extends State<ItemList> {
             itemBuilder: (BuildContext context, int index) {
               return ItemTile(
                 itemtitle: userdata.itemstitle[index],
-                itemicon: userdata.itemsicon[index] ??
-                    const CupertinoActivityIndicator(),
+                itemicon: userdata.itemsicon[index] ,
+                itemId: userdata.itemsid[index],
               );
             },
           );
