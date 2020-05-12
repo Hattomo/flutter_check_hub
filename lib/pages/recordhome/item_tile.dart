@@ -96,7 +96,6 @@ class _ItemTileState extends State<ItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    databaseServiceItem.getListItemdata('6deLcZIn6m30qrmXgRjS');
     final UserData user = Provider.of(context);
     void showEditItem() {
       showModalBottomSheet(
@@ -111,6 +110,7 @@ class _ItemTileState extends State<ItemTile> {
                 height: MediaQuery.of(context).size.height,
                 child: EditItemHome(
                   user: user,
+                  itemid: widget.itemdata.id,
                 ),
               ),
             );

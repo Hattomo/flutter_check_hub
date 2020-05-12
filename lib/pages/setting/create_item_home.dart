@@ -54,17 +54,20 @@ class _CreateItemHomeState extends State<CreateItemHome> {
                   FlatButton(
                     child: const Text('Done'),
                     onPressed: () async {
-                      await dataServiceItem.createItemData(
-                        widget.user.uid,
-                        'cook',
-                        'yy',
-                        '🎂',
-                        'kai',
-                        1,
-                        widget.user.itemsid,
-                        widget.user.itemstitle,
-                        widget.user.itemsicon,
-                      );
+                      if (_formKey.currentState.validate()) {
+                        dataServiceItem.createItemData(
+                          uid: widget.user.uid,
+                          title: currenttitle,
+                          data: 'yy',
+                          icon: currenticon,
+                          unit: currentunit,
+                          dataType: 1,
+                          itemsid: widget.user.itemsid,
+                          itemstitle: widget.user.itemstitle,
+                          itemsicon: widget.user.itemsicon,
+                        );
+                        Navigator.pop(context);
+                      }
                     },
                   )
                 ],

@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 
 @immutable
 class EditItemHome extends StatefulWidget {
-  const EditItemHome({Key key, this.user}) : super(key: key);
+  const EditItemHome({Key key, this.user, this.itemid}) : super(key: key);
   final UserData user;
+  final String itemid;
   @override
   _EditItemHomeState createState() => _EditItemHomeState();
 }
@@ -57,17 +58,21 @@ class _EditItemHomeState extends State<EditItemHome> {
                   FlatButton(
                     child: const Text('Done'),
                     onPressed: () async {
-                      await dataServiceItem.createItemData(
-                        widget.user.uid,
-                        'cook',
-                        'yy',
-                        '🎂',
-                        'kai',
-                        1,
-                        widget.user.itemsid,
-                        widget.user.itemstitle,
-                        widget.user.itemsicon,
-                      );
+                      if (_formKey.currentState.validate()) {
+                        dataServiceItem.updateItemData(
+                          documentId: widget.itemid,
+                          uid: widget.user.uid,
+                          title: currenttitle,
+                          data: 'yy',
+                          icon: currenticon,
+                          unit: currentunit,
+                          dataType: 1,
+                          itemsid: widget.user.itemsid,
+                          itemstitle: widget.user.itemstitle,
+                          itemsicon: widget.user.itemsicon,
+                        );
+                        Navigator.pop(context);
+                      }
                     },
                   )
                 ],
@@ -118,11 +123,11 @@ class _EditItemHomeState extends State<EditItemHome> {
                     child: ListTile(
                         leading: const Icon(Icons.ac_unit),
                         title: TextFormField(
-                          initialValue: itemdata.icon,
+                          initialValue: itemdata.unit,
                           decoration:
                               textInputDecoration.copyWith(hintText: 'Unit 🐣'),
                           validator: (String val) =>
-                              val.isEmpty ? 'Please enter a title' : null,
+                              val.isEmpty ? 'Please enter a unit' : null,
                           onChanged: (String val) =>
                               setState(() => currentunit = val),
                         )),
@@ -132,6 +137,7 @@ class _EditItemHomeState extends State<EditItemHome> {
                     child: ListTile(
                       leading: const Icon(Icons.insert_emoticon),
                       title: TextFormField(
+                        initialValue: itemdata.icon,
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Please input one emoji 😀'),
                         validator: (String val) =>

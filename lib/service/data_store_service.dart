@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
 
@@ -10,33 +11,50 @@ class DatabaseServiceItem {
   final CollectionReference itemCollection =
       Firestore.instance.collection('items');
 
-  Future<void> updateItemData(
-      {String id,
-      String title,
-      var data,
-      String icon,
-      String unit,
-      int dataType}) async {
-    return await itemCollection.document(id).setData({
+  Future<void> updateItemData({
+    @required String documentId,
+    @required String uid,
+    @required String title,
+    @required var data,
+    @required String icon,
+    @required String unit,
+    @required int dataType,
+    @required List<String> itemsid,
+    @required List<String> itemstitle,
+    @required List<String> itemsicon,
+  }) async {
+    await itemCollection.document(documentId).setData({
       'title': title,
       'data': data,
       'icon': icon,
       'unit': unit,
       'dataType': dataType
     });
+    for (int i = 0; i < itemsid.length; i++) {
+      if (itemsid[i] == documentId) {
+        itemstitle[i] = title;
+        itemsicon[i] = icon;
+      }
+    }
+    databaseServiceUser.updateuserData(
+      uid,
+      itemsid,
+      itemstitle,
+      itemsicon,
+    );
   }
 
-  Future<void> createItemData(
-    String uid,
-    String title,
-    var data,
-    String icon,
-    String unit,
-    int dataType,
-    List<String> itemsid,
-    List<String> itemstitle,
-    List<String> itemsicon,
-  ) async {
+  Future<void> createItemData({
+    @required String uid,
+    @required String title,
+    @required var data,
+    @required String icon,
+    @required String unit,
+    @required int dataType,
+    @required List<String> itemsid,
+    @required List<String> itemstitle,
+    @required List<String> itemsicon,
+  }) async {
     final String id = itemCollection.document().documentID;
     itemsid.add(id);
     itemstitle.add(title);
