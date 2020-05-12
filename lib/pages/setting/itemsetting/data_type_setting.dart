@@ -25,7 +25,7 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
 
     int getindex() {
       int index = -1;
-      for (int i=0; i < 10; i++) {
+      for (int i = 0; i < 10; i++) {
         if (isSelected[i] == true) {
           print(i);
           index = i;
@@ -42,7 +42,7 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
               Icons.arrow_back_ios,
               color: Colors.white,
             ),
-            onPressed: () async{
+            onPressed: () async {
               final int index = getindex();
               Navigator.pop<int>(context, index);
             },

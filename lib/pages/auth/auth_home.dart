@@ -7,14 +7,13 @@ import 'package:provider/provider.dart';
 class AuthHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return 
-      Container(
-        child: StreamProvider<User>.value(
-          value: AuthService().user,
-          child: Container(
-            child: AuthWrapper(),
-          ),
+    return Container(
+      child: StreamProvider<User>.value(
+        value: AuthService().user,
+        child: Container(
+          child: AuthWrapper(),
         ),
+      ),
     );
   }
 }

@@ -8,7 +8,6 @@ class SignIn extends StatefulWidget {
   const SignIn({this.toggleView});
   final Function toggleView;
 
-
   @override
   _SignInState createState() => _SignInState();
 }

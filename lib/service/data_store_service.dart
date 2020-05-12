@@ -104,30 +104,35 @@ class DatabaseServiceItem {
   Stream<ItemData> get itemData {
     return itemCollection
         .document(itemid)
-        //.get(source: Source.cache)
         .snapshots()
         .map(_itemDataFromSnapshot);
   }
 
   Future<void> createItemDailyData(
       String itemId, String documentId, var data) async {
+    final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
         .collection('data')
         .document(documentId)
         .setData({
       'data': data,
+      'documentId': documentId,
+      'datadate': date,
     });
   }
 
   Future<void> updateItemDailyData(
       String itemId, String documentId, var data) async {
+    final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
         .collection('data')
         .document(documentId)
         .setData({
       'data': data,
+      'documentId': documentId,
+      'datadate': date,
     });
   }
 
@@ -154,5 +159,25 @@ class DatabaseServiceItem {
     } catch (e) {
       return 'NetWorkError';
     }
+  }
+
+  Future<List<dynamic>> getListItemdata(String itemId) async {
+    final QuerySnapshot data = await Firestore.instance
+        .collection('items/' + itemId + '/data')
+        .where('datadate', isLessThan: 200)
+        .orderBy('datadate')
+        .getDocuments();
+    final List<dynamic> list = [];
+    for (int i = 0; i < data.documents.length; i++) {
+      print(data.documents[i].data['data']);
+      final List<dynamic> docdata = [
+        data.documents[i].data['data'],
+        data.documents[i].data['documentId'],
+        data.documents[i].data['datadate'],
+      ];
+      list.add(docdata);
+    }
+    print(list);
+    return list;
   }
 }

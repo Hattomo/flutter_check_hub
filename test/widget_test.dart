@@ -15,7 +15,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('daytime2int', () {
     final DatabaseKey databaseKey = DatabaseKey();
-    final String value = databaseKey.datetimetKeyFormatter(DateTime(2020, 4, 30)).toString();
+    final String value =
+        databaseKey.datetimetKeyFormatter(DateTime(2020, 4, 30)).toString();
     expect(value, '20200430');
   });
 

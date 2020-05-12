@@ -30,12 +30,15 @@ class _RecordHomeState extends State<RecordHome> {
     }
 
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            child: ItemList(),
-          ),
-        ],
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Container(
+              child: ItemList(),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

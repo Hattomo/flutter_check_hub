@@ -16,8 +16,9 @@ class Settings extends StatelessWidget {
       //final String buildNumber = packageInfo.buildNumber;
       return version;
     }
-    
+
     return ListView(
+      physics: const BouncingScrollPhysics(),
       children: <Widget>[
         Container(
           color: Colors.white,
