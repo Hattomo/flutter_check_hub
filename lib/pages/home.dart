@@ -149,12 +149,15 @@ class _CheckHubHomeState extends State<CheckHubHome>
               ),
             ),
             body: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: <Widget>[
                 StreamProvider.value(
                   initialData: dateTimeManager.selectedDate,
                   value: dateTimeManager.dateStream,
-                  child: RecordHome(),
+                  child: RecordHome(
+                    dateTimeManager: dateTimeManager,
+                  ),
                 ),
                 GraphHome(),
                 Settings(),

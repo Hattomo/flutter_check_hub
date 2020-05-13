@@ -9,6 +9,7 @@ class GraphHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserData userdata = Provider.of(context);
     return ListView.builder(
+        physics: const BouncingScrollPhysics(),
         itemCount: userdata.itemsid.length,
         itemBuilder: (context, index) {
           return Padding(
