@@ -25,9 +25,9 @@ class _CreateItemHomeState extends State<CreateItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.user);
-    print('user uid: ${widget.user.uid}');
-    print('user itemsid: ${widget.user.itemsid}');
+    //print(widget.user);
+    //print('user uid: ${widget.user.uid}');
+    //print('user itemsid: ${widget.user.itemsid}');
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(

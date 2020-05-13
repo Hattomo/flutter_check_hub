@@ -77,9 +77,11 @@ class _ItemTileState extends State<ItemTile> {
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
                             databaseServiceItem.createItemDailyData(
-                                widget.itemdata.id,
-                                databaseKey.datetimetKeyFormatter(dateTime),
-                                currentdata);
+                              widget.itemdata.id,
+                              databaseKey.datetimetKeyFormatter(dateTime),
+                              currentdata,
+                              dateTime,
+                            );
                             setState(() {});
                             Navigator.pop(context);
                           }

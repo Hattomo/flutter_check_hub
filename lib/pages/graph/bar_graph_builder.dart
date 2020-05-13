@@ -18,16 +18,31 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
   final DatabaseServiceItem databaseServiceItem = DatabaseServiceItem();
   List<BarChartGroupData> rawBarGroups;
   List<BarChartGroupData> showingBarGroups;
-
+  double maxvalue;
+  double minvalue;
   int touchedGroupIndex;
 
   Future<List<BarChartGroupData>> getBarGroupData() async {
     final List<BarChartGroupData> items = [];
     await databaseServiceItem.getListItemdata(widget.itemData.id).then((value) {
-      for (int i = 0; i < value.length; i++) {
-        items.add(makeGroupData(i, double.parse(value[i][0])));
+      final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
+      int cnt = 0;
+      int listindex = 0;
+      // get max
+      for (int i = date - 30; i <= date; i++) {
+        if ((value[listindex][2]).toInt() != i) {
+          items.add(makeGroupData(cnt, 0));
+        } else if ((value[listindex][2]).toInt() == i) {
+          items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
+          if (listindex == 0) {
+            maxvalue = double.parse(value[listindex][0]);
+          } else if (double.parse(value[listindex][0]) > maxvalue) {
+            maxvalue = double.parse(value[listindex][0]);
+          }
+          listindex++;
+        }
+        cnt++;
       }
-      print(items);
     });
     return items;
   }
@@ -67,7 +82,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                     width: 4,
                   ),
                   const Text(
-                    'This Week',
+                    'This Month',
                     style: TextStyle(color: Color(0xff77839a), fontSize: 16),
                   ),
                 ],
@@ -84,7 +99,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: BarChart(
                           BarChartData(
-                            maxY: 20,
+                            maxY: maxvalue * 1.1,
                             titlesData: FlTitlesData(
                               show: true,
                               bottomTitles: SideTitles(
@@ -94,22 +109,23 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14),
                                 margin: 20,
+                                reservedSize: 14.0,
                                 getTitles: (double value) {
                                   switch (value.toInt()) {
-                                    case 0:
-                                      return 'Mn';
                                     case 1:
-                                      return 'Te';
-                                    case 2:
-                                      return 'Wd';
-                                    case 3:
-                                      return 'Tu';
-                                    case 4:
-                                      return 'Fr';
+                                      return '30';
                                     case 5:
-                                      return 'St';
-                                    case 6:
-                                      return 'Sn';
+                                      return '25';
+                                    case 10:
+                                      return '20';
+                                    case 15:
+                                      return '15';
+                                    case 20:
+                                      return '10';
+                                    case 25:
+                                      return '5';
+                                    case 30:
+                                      return '0';
                                     default:
                                       return '';
                                   }
@@ -123,13 +139,13 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                                     fontSize: 14),
                                 margin: 32,
                                 reservedSize: 14,
-                                getTitles: (value) {
+                                getTitles: (double value) {
                                   if (value == 0) {
-                                    return '0K';
-                                  } else if (value == 10) {
-                                    return '5K';
-                                  } else if (value == 19) {
-                                    return '10K';
+                                    return '0';
+                                  } else if (value == maxvalue / 2) {
+                                    return (maxvalue / 2).toString();
+                                  } else if (value == maxvalue) {
+                                    return maxvalue.toString();
                                   } else {
                                     return '';
                                   }

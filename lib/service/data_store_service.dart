@@ -127,8 +127,8 @@ class DatabaseServiceItem {
   }
 
   Future<void> createItemDailyData(
-      String itemId, String documentId, var data) async {
-    final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
+      String itemId, String documentId, var data, DateTime dateTime) async {
+    final int date = dateTime.difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
         .collection('data')
@@ -141,8 +141,8 @@ class DatabaseServiceItem {
   }
 
   Future<void> updateItemDailyData(
-      String itemId, String documentId, var data) async {
-    final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
+      String itemId, String documentId, var data, DateTime dateTime) async {
+    final int date = dateTime.difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
         .collection('data')
@@ -180,14 +180,15 @@ class DatabaseServiceItem {
   }
 
   Future<List<dynamic>> getListItemdata(String itemId) async {
+    final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
     final QuerySnapshot data = await Firestore.instance
         .collection('items/' + itemId + '/data')
-        .where('datadate', isLessThan: 200)
+        .where('datadate', isLessThanOrEqualTo: date)
+        .where('datadate', isGreaterThan: date - 30)
         .orderBy('datadate')
         .getDocuments();
     final List<dynamic> list = [];
     for (int i = 0; i < data.documents.length; i++) {
-      print(data.documents[i].data['data']);
       final List<dynamic> docdata = [
         data.documents[i].data['data'],
         data.documents[i].data['documentId'],
