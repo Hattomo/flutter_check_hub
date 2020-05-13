@@ -15,25 +15,21 @@ class DatabaseServiceItem {
     @required String documentId,
     @required String uid,
     @required String title,
-    @required var data,
     @required String icon,
     @required String unit,
     @required int dataType,
     @required List<String> itemsid,
     @required List<String> itemstitle,
     @required List<String> itemsicon,
+    @required List<String> itemsunit,
   }) async {
-    await itemCollection.document(documentId).setData({
-      'title': title,
-      'data': data,
-      'icon': icon,
-      'unit': unit,
-      'dataType': dataType
-    });
+    await itemCollection.document(documentId).setData(
+        {'title': title, 'icon': icon, 'unit': unit, 'dataType': dataType});
     for (int i = 0; i < itemsid.length; i++) {
       if (itemsid[i] == documentId) {
         itemstitle[i] = title;
         itemsicon[i] = icon;
+        itemsunit[i] = unit;
       }
     }
     databaseServiceUser.updateuserData(
@@ -41,36 +37,34 @@ class DatabaseServiceItem {
       itemsid,
       itemstitle,
       itemsicon,
+      itemsunit,
     );
   }
 
   Future<void> createItemData({
     @required String uid,
     @required String title,
-    @required var data,
     @required String icon,
     @required String unit,
     @required int dataType,
     @required List<String> itemsid,
     @required List<String> itemstitle,
     @required List<String> itemsicon,
+    @required List<String> itemsunit,
   }) async {
     final String id = itemCollection.document().documentID;
     itemsid.add(id);
     itemstitle.add(title);
     itemsicon.add(icon);
-    await itemCollection.document(id).setData({
-      'title': title,
-      'data': data,
-      'icon': icon,
-      'unit': unit,
-      'dataType': dataType
-    });
+    itemsunit.add(unit);
+    await itemCollection.document(id).setData(
+        {'title': title, 'icon': icon, 'unit': unit, 'dataType': dataType});
     databaseServiceUser.updateuserData(
       uid,
       itemsid,
       itemstitle,
       itemsicon,
+      itemsunit,
     );
   }
 
@@ -84,7 +78,6 @@ class DatabaseServiceItem {
     return snapshot.documents.map((doc) {
       //print(doc.data);
       return Item(
-          data: doc.data['data'] ?? '',
           title: doc.data['title'] ?? '',
           icon: doc.data['icon'] ?? '',
           unit: doc.data['unit'] ?? '',
@@ -95,7 +88,6 @@ class DatabaseServiceItem {
   //user data from snapshot
   ItemData _itemDataFromSnapshot(DocumentSnapshot snapshot) {
     return ItemData(
-      data: snapshot.data['data'],
       title: snapshot.data['title'],
       icon: snapshot.data['icon'] ?? '',
       unit: snapshot.data['unit'] ?? '',

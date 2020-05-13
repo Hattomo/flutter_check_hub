@@ -1,7 +1,6 @@
 class Item {
   Item({
     this.title,
-    this.data,
     this.icon,
     this.dataType,
     this.unit,
@@ -9,7 +8,6 @@ class Item {
   });
 
   String title;
-  dynamic data;
   String icon;
   int dataType;
   String unit;
@@ -19,7 +17,6 @@ class Item {
 class ItemData {
   ItemData({
     this.title,
-    this.data,
     this.icon,
     this.dataType,
     this.unit,
@@ -27,7 +24,6 @@ class ItemData {
   });
 
   String title;
-  dynamic data;
   String icon;
   int dataType;
   String unit;
