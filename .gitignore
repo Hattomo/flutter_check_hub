@@ -48,6 +48,15 @@ app.*.map.json
 # google-services.json
 /android/app/google-services.json
 
+# GCP (firebase files)
+/functions
+/.firebaserc
+/database.rules.json
+/firebase.json
+/firestore.indexes.json
+/firestore.rules
+/storage.rules
+
 # my note 
 /note
 
