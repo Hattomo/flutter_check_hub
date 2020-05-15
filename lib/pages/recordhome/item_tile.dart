@@ -29,13 +29,19 @@ class _ItemTileState extends State<ItemTile> {
         context: context,
         builder: (BuildContext context) {
           return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(top: 10.0, right: 8.0, left: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text('Input number'),
+                  const Text(
+                    'Input number',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                  ),
                   const SizedBox(
                     height: 10.0,
                   ),
@@ -63,11 +69,7 @@ class _ItemTileState extends State<ItemTile> {
                       onChanged: (value) => setState(() => currentdata = value),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  ButtonBar(
                     children: [
                       FlatButton(
                         child: const Text('Cancel'),
@@ -125,39 +127,53 @@ class _ItemTileState extends State<ItemTile> {
           context: context,
           builder: (BuildContext context) {
             return Dialog(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Do you really want to delete this ?'),
-                  ButtonBar(
-                    children: [
-                      FlatButton(
-                          child: const Text('Cancel'),
-                          onPressed: () => Navigator.pop(context)),
-                      FlatButton(
-                        child: const Text('Delete'),
-                        onPressed: () {
-                          databaseServiceItem.deleteItemData(
-                            uid: user.uid,
-                            itemid: widget.itemdata.id,
-                            itemsid: user.itemsid,
-                            itemsicon: user.itemsicon,
-                            itemstitle: user.itemstitle,
-                            itemsunit: user.itemsunit,
-                          );
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 15.0, left: 8.0, right: 8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Do you really want to delete this ?',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0),
+                    ),
+                    const SizedBox(
+                      height: 30.0,
+                    ),
+                    ButtonBar(
+                      children: [
+                        FlatButton(
+                            child: const Text('Cancel'),
+                            onPressed: () => Navigator.pop(context)),
+                        FlatButton(
+                          child: const Text('Delete'),
+                          textColor: Colors.red,
+                          onPressed: () {
+                            databaseServiceItem.deleteItemData(
+                              uid: user.uid,
+                              itemid: widget.itemdata.id,
+                              itemsid: user.itemsid,
+                              itemsicon: user.itemsicon,
+                              itemstitle: user.itemstitle,
+                              itemsunit: user.itemsunit,
+                            );
 
-                          CloudFunctions(region: 'asia-northeast1')
-                              .getHttpsCallable(
-                                  functionName: 'recursivedeleteitemdata')
-                              .call(<String, dynamic>{
-                            'documentId': widget.itemdata.id,
-                          });
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+                            CloudFunctions(region: 'asia-northeast1')
+                                .getHttpsCallable(
+                                    functionName: 'recursivedeleteitemdata')
+                                .call(<String, dynamic>{
+                              'documentId': widget.itemdata.id,
+                            });
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           });

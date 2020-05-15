@@ -35,6 +35,7 @@ class _EditItemHomeState extends State<EditItemHome> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(

@@ -31,6 +31,7 @@ class _CreateItemHomeState extends State<CreateItemHome> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
             Container(

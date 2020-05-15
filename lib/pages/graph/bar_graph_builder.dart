@@ -44,10 +44,10 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
               maxvalue = double.parse(value[listindex][0]);
             }
             listindex++;
-          } else {
-            items.add(makeGroupData(cnt, 0));
           }
           print(listindex);
+        } else {
+          items.add(makeGroupData(cnt, 0));
         }
         cnt++;
       }

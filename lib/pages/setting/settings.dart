@@ -39,6 +39,21 @@ class Settings extends StatelessWidget {
         Container(
           color: Colors.white,
           child: ListTile(
+            leading: const Icon(Icons.cloud),
+            title: const Text('Export'),
+            trailing: IconButton(
+              icon: const Icon(Icons.arrow_forward_ios),
+              onPressed: () {},
+            ),
+          ),
+        ),
+        Divider(
+          color: Colors.grey[200],
+          height: 0.8,
+        ),
+        Container(
+          color: Colors.white,
+          child: ListTile(
             leading: const Icon(Icons.info_outline),
             title: const Text('Version'),
             trailing: FutureBuilder<String>(
@@ -50,6 +65,26 @@ class Settings extends StatelessWidget {
               ),
             ),
           ),
+        ),
+        Divider(
+          color: Colors.grey[200],
+          height: 0.8,
+        ),
+        Container(
+          color: Colors.white,
+          child: ListTile(
+            leading: const Icon(Icons.loyalty),
+            title: const Text('Open Source Licence',
+                style: TextStyle(color: Colors.black)),
+            trailing: IconButton(
+              icon: const Icon(Icons.arrow_forward_ios),
+              onPressed: () {},
+            ),
+          ),
+        ),
+        Divider(
+          color: Colors.grey[200],
+          height: 0.8,
         ),
         const SizedBox(height: 20.0),
         InkWell(
