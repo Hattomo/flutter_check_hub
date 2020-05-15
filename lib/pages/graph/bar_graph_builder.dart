@@ -30,20 +30,30 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
       int listindex = 0;
       // get max
       for (int i = date - 30; i <= date; i++) {
-        if ((value[listindex][2]).toInt() != i) {
-          items.add(makeGroupData(cnt, 0));
-        } else if ((value[listindex][2]).toInt() == i) {
-          items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
-          if (listindex == 0) {
-            maxvalue = double.parse(value[listindex][0]);
-          } else if (double.parse(value[listindex][0]) > maxvalue) {
-            maxvalue = double.parse(value[listindex][0]);
+        print(cnt);
+        if (listindex < value.length) {
+          if ((value[listindex][2]).toInt() != i) {
+            items.add(makeGroupData(cnt, 0));
+            print('$cnt:0');
+          } else if ((value[listindex][2]).toInt() == i) {
+            items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
+            print('$cnt:${value[listindex][0]}');
+            if (listindex == 0) {
+              maxvalue = double.parse(value[listindex][0]);
+            } else if (double.parse(value[listindex][0]) > maxvalue) {
+              maxvalue = double.parse(value[listindex][0]);
+            }
+            listindex++;
+          } else {
+            items.add(makeGroupData(cnt, 0));
           }
-          listindex++;
+          print(listindex);
         }
         cnt++;
       }
+      print(items.length);
     });
+    print(items);
     return items;
   }
 
@@ -111,6 +121,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                                 margin: 20,
                                 reservedSize: 14.0,
                                 getTitles: (double value) {
+                                  print(value);
                                   switch (value.toInt()) {
                                     case 1:
                                       return '30';
@@ -124,8 +135,8 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                                       return '10';
                                     case 25:
                                       return '5';
-                                    case 30:
-                                      return '0';
+                                    case 29:
+                                      return '1';
                                     default:
                                       return '';
                                   }

@@ -23,8 +23,13 @@ class DatabaseServiceItem {
     @required List<String> itemsicon,
     @required List<String> itemsunit,
   }) async {
-    await itemCollection.document(documentId).setData(
-        {'title': title, 'icon': icon, 'unit': unit, 'dataType': dataType});
+    await itemCollection.document(documentId).setData({
+      'title': title,
+      'icon': icon,
+      'unit': unit,
+      'dataType': dataType,
+      'isInUse': true
+    });
     for (int i = 0; i < itemsid.length; i++) {
       if (itemsid[i] == documentId) {
         itemstitle[i] = title;
@@ -57,8 +62,13 @@ class DatabaseServiceItem {
     itemstitle.add(title);
     itemsicon.add(icon);
     itemsunit.add(unit);
-    await itemCollection.document(id).setData(
-        {'title': title, 'icon': icon, 'unit': unit, 'dataType': dataType});
+    await itemCollection.document(id).setData({
+      'title': title,
+      'icon': icon,
+      'unit': unit,
+      'dataType': dataType,
+      'isInUse': true
+    });
     databaseServiceUser.updateuserData(
       uid,
       itemsid,
@@ -68,9 +78,28 @@ class DatabaseServiceItem {
     );
   }
 
-  Future<void> deleteItemData(String itemid) async {
+  Future<void> deleteItemData({
+    @required String itemid,
+    @required String uid,
+    @required List<String> itemsid,
+    @required List<String> itemstitle,
+    @required List<String> itemsicon,
+    @required List<String> itemsunit,
+  }) async {
     //print(item.title);
-    return await itemCollection.document(itemid).delete();
+    await itemCollection.document(itemid).setData({
+      'isInUse': false,
+    });
+    for (int i = 0; i < itemsid.length; i++) {
+      if (itemsid[i] == itemid) {
+        itemsid.removeAt(i);
+        itemstitle.removeAt(i);
+        itemsicon.removeAt(i);
+        itemsunit.removeAt(i);
+      }
+    }
+    databaseServiceUser.updateuserData(
+        uid, itemsid, itemstitle, itemsicon, itemsunit);
   }
 
   // itemmodels list from snapshot

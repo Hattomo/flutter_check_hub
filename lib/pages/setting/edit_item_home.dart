@@ -62,9 +62,9 @@ class _EditItemHomeState extends State<EditItemHome> {
                         dataServiceItem.updateItemData(
                           documentId: widget.itemid,
                           uid: widget.user.uid,
-                          title: currenttitle,
-                          icon: currenticon,
-                          unit: currentunit,
+                          title: currenttitle ?? itemdata.title,
+                          icon: currenticon ?? itemdata.icon,
+                          unit: currentunit ?? itemdata.unit,
                           dataType: 1,
                           itemsid: widget.user.itemsid,
                           itemstitle: widget.user.itemstitle,
@@ -174,7 +174,7 @@ class _EditItemHomeState extends State<EditItemHome> {
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Please input goal 🎉'),
                         validator: (String val) =>
-                            val.isEmpty ? 'Please enter a title' : null,
+                            val.isEmpty ? 'Please enter a goal' : null,
                         onChanged: (String val) =>
                             setState(() => currentgoal = val),
                         onTap: () {},

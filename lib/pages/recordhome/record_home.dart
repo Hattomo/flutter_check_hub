@@ -13,8 +13,8 @@ class RecordHome extends StatefulWidget {
 }
 
 class _RecordHomeState extends State<RecordHome> {
-  Offset beginningDragPosition;
-  Offset updatingDragPosition;
+  Offset beginningDragPosition = Offset.zero;
+  Offset updatingDragPosition = Offset.zero;
 
   void onHorizontalDragStart(DragStartDetails details) {
     beginningDragPosition = details.globalPosition;

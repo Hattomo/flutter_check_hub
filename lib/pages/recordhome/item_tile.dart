@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/Item.dart';
@@ -135,7 +136,24 @@ class _ItemTileState extends State<ItemTile> {
                           onPressed: () => Navigator.pop(context)),
                       FlatButton(
                         child: const Text('Delete'),
-                        onPressed: () {},
+                        onPressed: () {
+                          databaseServiceItem.deleteItemData(
+                            uid: user.uid,
+                            itemid: widget.itemdata.id,
+                            itemsid: user.itemsid,
+                            itemsicon: user.itemsicon,
+                            itemstitle: user.itemstitle,
+                            itemsunit: user.itemsunit,
+                          );
+
+                          CloudFunctions(region: 'asia-northeast1')
+                              .getHttpsCallable(
+                                  functionName: 'recursivedeleteitemdata')
+                              .call(<String, dynamic>{
+                            'documentId': widget.itemdata.id,
+                          });
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),

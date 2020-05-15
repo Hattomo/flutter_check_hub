@@ -166,7 +166,7 @@ class _CreateItemHomeState extends State<CreateItemHome> {
                         decoration: textInputDecoration.copyWith(
                             hintText: 'Please input goal 🎉'),
                         validator: (String val) =>
-                            val.isEmpty ? 'Please enter a title' : null,
+                            val.isEmpty ? 'Please enter a goal' : null,
                         onChanged: (String val) =>
                             setState(() => currentgoal = val),
                         onTap: () {},

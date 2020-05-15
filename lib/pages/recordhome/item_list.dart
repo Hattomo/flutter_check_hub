@@ -38,6 +38,7 @@ class _ItemListState extends State<ItemList> {
                 title: userdata.itemstitle[index],
                 icon: userdata.itemsicon[index],
                 id: userdata.itemsid[index],
+                unit: userdata.itemsunit[index],
               ));
             },
           );

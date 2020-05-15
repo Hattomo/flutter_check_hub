@@ -5,6 +5,7 @@ class Item {
     this.dataType,
     this.unit,
     this.id,
+    this.isInUse,
   });
 
   String title;
@@ -12,6 +13,7 @@ class Item {
   int dataType;
   String unit;
   String id;
+  bool isInUse;
 }
 
 class ItemData {
@@ -21,6 +23,7 @@ class ItemData {
     this.dataType,
     this.unit,
     this.id,
+    this.isInUse,
   });
 
   String title;
@@ -28,4 +31,5 @@ class ItemData {
   int dataType;
   String unit;
   String id;
+  bool isInUse;
 }
