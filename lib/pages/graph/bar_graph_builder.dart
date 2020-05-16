@@ -7,7 +7,7 @@ import 'package:flutter_check_hub/service/data_store_service.dart';
 @immutable
 class BarGraphBuilder extends StatefulWidget {
   const BarGraphBuilder(this.itemData);
-  final ItemData itemData;
+  final Item itemData;
   @override
   State<StatefulWidget> createState() => BarGraphBuilderState();
 }

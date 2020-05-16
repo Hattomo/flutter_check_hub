@@ -7,11 +7,9 @@ import 'package:flutter_check_hub/shared/text_input_decoration.dart';
 
 @immutable
 class EditItemHome extends StatefulWidget {
-  const EditItemHome({Key key, this.user, this.itemid, this.itemdata})
-      : super(key: key);
-  final UserData user;
-  final String itemid;
-  final ItemData itemdata;
+  const EditItemHome({Key key, this.user, this.itemdata}) : super(key: key);
+  final User user;
+  final Item itemdata;
   @override
   _EditItemHomeState createState() => _EditItemHomeState();
 }
@@ -29,7 +27,7 @@ class _EditItemHomeState extends State<EditItemHome> {
 
   @override
   Widget build(BuildContext context) {
-    //print(widget.user);
+    //print(widget.itemdata.id);
     //print('user uid: ${widget.user.uid}');
     //print('user itemsid: ${widget.user.itemsid}');
     return Scaffold(
@@ -47,16 +45,20 @@ class _EditItemHomeState extends State<EditItemHome> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 dataServiceItem.updateItemData(
-                  documentId: widget.itemid,
-                  uid: widget.user.uid,
-                  title: currenttitle ?? widget.itemdata.title,
-                  icon: currenticon ?? widget.itemdata.icon,
-                  unit: currentunit ?? widget.itemdata.unit,
-                  dataType: 1,
-                  itemsid: widget.user.itemsid,
-                  itemstitle: widget.user.itemstitle,
-                  itemsicon: widget.user.itemsicon,
-                  itemsunit: widget.user.itemsunit,
+                  user: User(
+                    uid: widget.user.uid,
+                    itemsid: widget.user.itemsid,
+                    itemstitle: widget.user.itemstitle,
+                    itemsicon: widget.user.itemsicon,
+                    itemsunit: widget.user.itemsunit,
+                  ),
+                  item: Item(
+                    id: widget.itemdata.id,
+                    title: currenttitle ?? widget.itemdata.title,
+                    icon: currenticon ?? widget.itemdata.icon,
+                    unit: currentunit ?? widget.itemdata.unit,
+                    dataType: 1,
+                  ),
                 );
                 Navigator.pop(context);
               }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_check_hub/shared/text_input_decoration.dart';
 @immutable
 class CreateItemHome extends StatefulWidget {
   const CreateItemHome({Key key, this.user}) : super(key: key);
-  final UserData user;
+  final User user;
   @override
   _CreateItemHomeState createState() => _CreateItemHomeState();
 }
@@ -43,15 +44,19 @@ class _CreateItemHomeState extends State<CreateItemHome> {
             onPressed: () async {
               if (_formKey.currentState.validate()) {
                 dataServiceItem.createItemData(
-                  uid: widget.user.uid,
-                  title: currenttitle,
-                  icon: currenticon,
-                  unit: currentunit,
-                  dataType: 1,
-                  itemsid: widget.user.itemsid,
-                  itemstitle: widget.user.itemstitle,
-                  itemsicon: widget.user.itemsicon,
-                  itemsunit: widget.user.itemsunit,
+                  user: User(
+                    uid: widget.user.uid,
+                    itemsid: widget.user.itemsid,
+                    itemstitle: widget.user.itemstitle,
+                    itemsicon: widget.user.itemsicon,
+                    itemsunit: widget.user.itemsunit,
+                  ),
+                  item: Item(
+                    title: currenttitle,
+                    icon: currenticon,
+                    unit: currentunit,
+                    dataType: 1,
+                  ),
                 );
                 Navigator.pop(context);
               }

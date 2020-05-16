@@ -15,21 +15,3 @@ class Item {
   String id;
   bool isInUse;
 }
-
-class ItemData {
-  ItemData({
-    this.title,
-    this.icon,
-    this.dataType,
-    this.unit,
-    this.id,
-    this.isInUse,
-  });
-
-  String title;
-  String icon;
-  int dataType;
-  String unit;
-  String id;
-  bool isInUse;
-}

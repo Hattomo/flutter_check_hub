@@ -149,7 +149,10 @@ class _CheckHubAppBarState extends State<CheckHubAppBar> {
         title: const Text('Settings'),
       );
     } else {
-      return null;
+      return AppBar(
+        centerTitle: true,
+        title: const Text('Check Hub'),
+      );
     }
   }
 }

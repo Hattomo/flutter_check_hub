@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/models/user.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
 
 class DatabaseServiceItem {
@@ -12,94 +13,77 @@ class DatabaseServiceItem {
       Firestore.instance.collection('items');
 
   Future<void> updateItemData({
-    @required String documentId,
-    @required String uid,
-    @required String title,
-    @required String icon,
-    @required String unit,
-    @required int dataType,
-    @required List<String> itemsid,
-    @required List<String> itemstitle,
-    @required List<String> itemsicon,
-    @required List<String> itemsunit,
+    @required User user,
+    @required Item item,
   }) async {
-    await itemCollection.document(documentId).setData({
-      'title': title,
-      'icon': icon,
-      'unit': unit,
-      'dataType': dataType,
-      'isInUse': true
+    await itemCollection.document(item.id).setData({
+      'title': item.title,
+      'icon': item.icon,
+      'unit': item.unit,
+      'dataType': item.dataType,
+      'id': item.id,
+      'isInUse': true,
     });
-    for (int i = 0; i < itemsid.length; i++) {
-      if (itemsid[i] == documentId) {
-        itemstitle[i] = title;
-        itemsicon[i] = icon;
-        itemsunit[i] = unit;
+    for (int i = 0; i < user.itemsid.length; i++) {
+      if (user.itemsid[i] == item.id) {
+        user.itemstitle[i] = item.title;
+        user.itemsicon[i] = item.icon;
+        user.itemsunit[i] = item.unit;
       }
     }
     databaseServiceUser.updateuserData(
-      uid,
-      itemsid,
-      itemstitle,
-      itemsicon,
-      itemsunit,
+      user.uid,
+      user.itemsid,
+      user.itemstitle,
+      user.itemsicon,
+      user.itemsunit,
     );
   }
 
   Future<void> createItemData({
-    @required String uid,
-    @required String title,
-    @required String icon,
-    @required String unit,
-    @required int dataType,
-    @required List<String> itemsid,
-    @required List<String> itemstitle,
-    @required List<String> itemsicon,
-    @required List<String> itemsunit,
+    @required User user,
+    @required Item item,
   }) async {
     final String id = itemCollection.document().documentID;
-    itemsid.add(id);
-    itemstitle.add(title);
-    itemsicon.add(icon);
-    itemsunit.add(unit);
+    user.itemsid.add(item.id);
+    user.itemstitle.add(item.title);
+    user.itemsicon.add(item.icon);
+    user.itemsunit.add(item.unit);
     await itemCollection.document(id).setData({
-      'title': title,
-      'icon': icon,
-      'unit': unit,
-      'dataType': dataType,
+      'title': item.title,
+      'icon': item.icon,
+      'unit': item.unit,
+      'dataType': item.dataType,
+      'id': id,
       'isInUse': true
     });
     databaseServiceUser.updateuserData(
-      uid,
-      itemsid,
-      itemstitle,
-      itemsicon,
-      itemsunit,
+      user.uid,
+      user.itemsid,
+      user.itemstitle,
+      user.itemsicon,
+      user.itemsunit,
     );
   }
 
   Future<void> deleteItemData({
-    @required String itemid,
-    @required String uid,
-    @required List<String> itemsid,
-    @required List<String> itemstitle,
-    @required List<String> itemsicon,
-    @required List<String> itemsunit,
+    @required User user,
+    @required Item item,
   }) async {
     //print(item.title);
-    await itemCollection.document(itemid).setData({
+    await itemCollection.document(item.id).setData({
       'isInUse': false,
     });
-    for (int i = 0; i < itemsid.length; i++) {
-      if (itemsid[i] == itemid) {
-        itemsid.removeAt(i);
-        itemstitle.removeAt(i);
-        itemsicon.removeAt(i);
-        itemsunit.removeAt(i);
+    for (int i = 0; i < user.itemsid.length; i++) {
+      if (user.itemsid[i] == itemid) {
+        user.itemsid.removeAt(i);
+        user.itemstitle.removeAt(i);
+        user.itemsicon.removeAt(i);
+        user.itemsunit.removeAt(i);
       }
     }
-    databaseServiceUser.updateuserData(
-        uid, itemsid, itemstitle, itemsicon, itemsunit);
+    databaseServiceUser.updateuserData(user.uid, user.itemsid, user.itemstitle,
+        user.itemsicon, user.itemsunit);
   }
 
   // itemmodels list from snapshot
@@ -107,20 +91,23 @@ class DatabaseServiceItem {
     return snapshot.documents.map((doc) {
       //print(doc.data);
       return Item(
-          title: doc.data['title'] ?? '',
-          icon: doc.data['icon'] ?? '',
-          unit: doc.data['unit'] ?? '',
-          dataType: doc.data['dataType'] ?? -100);
+        title: doc.data['title'] ?? '',
+        icon: doc.data['icon'] ?? '',
+        unit: doc.data['unit'] ?? '',
+        dataType: doc.data['dataType'] ?? -100,
+        id: doc.data['id'] ?? '',
+      );
     }).toList();
   }
 
   //user data from snapshot
-  ItemData _itemDataFromSnapshot(DocumentSnapshot snapshot) {
-    return ItemData(
+  Item _itemDataFromSnapshot(DocumentSnapshot snapshot) {
+    return Item(
       title: snapshot.data['title'],
       icon: snapshot.data['icon'] ?? '',
       unit: snapshot.data['unit'] ?? '',
       dataType: snapshot.data['dataType'] ?? '',
+      id: snapshot.data['id'] ?? '',
     );
   }
 
@@ -140,7 +127,7 @@ class DatabaseServiceItem {
   }
 
   //get user doc stream
-  Stream<ItemData> get itemData {
+  Stream<Item> get itemData {
     return itemCollection
         .document(itemid)
         .snapshots()

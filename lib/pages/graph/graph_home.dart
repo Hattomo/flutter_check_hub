@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 class GraphHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final UserData userdata = Provider.of(context);
+    final User userdata = Provider.of(context);
     return ListView.builder(
         physics: const BouncingScrollPhysics(),
         itemCount: userdata.itemsid.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: BarGraphBuilder(ItemData(
+            child: BarGraphBuilder(Item(
                 title: userdata.itemstitle[index],
                 icon: userdata.itemsicon[index],
                 id: userdata.itemsid[index])),

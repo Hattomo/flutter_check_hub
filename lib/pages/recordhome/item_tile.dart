@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 @immutable
 class ItemTile extends StatefulWidget {
   const ItemTile({this.itemdata});
-  final ItemData itemdata;
+  final Item itemdata;
   @override
   _ItemTileState createState() => _ItemTileState();
 }
@@ -101,14 +101,13 @@ class _ItemTileState extends State<ItemTile> {
 
   @override
   Widget build(BuildContext context) {
-    final UserData user = Provider.of(context);
+    final User user = Provider.of(context);
     void showEditItem() {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
             return EditItemHome(
               user: user,
-              itemid: widget.itemdata.id,
               itemdata: widget.itemdata,
             );
           },
@@ -148,14 +147,15 @@ class _ItemTileState extends State<ItemTile> {
                           textColor: Colors.red,
                           onPressed: () {
                             databaseServiceItem.deleteItemData(
-                              uid: user.uid,
-                              itemid: widget.itemdata.id,
-                              itemsid: user.itemsid,
-                              itemsicon: user.itemsicon,
-                              itemstitle: user.itemstitle,
-                              itemsunit: user.itemsunit,
+                              user: User(
+                                uid: user.uid,
+                                itemsid: user.itemsid,
+                                itemstitle: user.itemstitle,
+                                itemsicon: user.itemsicon,
+                                itemsunit: user.itemsunit,
+                              ),
+                              item: Item(id: widget.itemdata.id),
                             );
-
                             CloudFunctions(region: 'asia-northeast1')
                                 .getHttpsCallable(
                                     functionName: 'recursivedeleteitemdata')

@@ -40,7 +40,7 @@ class DatabaseServiceUser {
     return await userCollection.document(user.uid).delete();
   }
 
-  Stream<UserData> user(User user) {
+  Stream<User> user(User user) {
     try {
       return userCollection
           .document(user.uid)
@@ -52,9 +52,9 @@ class DatabaseServiceUser {
     return null;
   }
 
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
+  User _userDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
-      return UserData(
+      return User(
         itemsid: List.from(snapshot.data['itemsid']) ?? [' '],
         itemstitle: List.from(snapshot.data['itemstitle']) ?? [' '],
         itemsicon: List.from(snapshot.data['itemsicon']) ?? [' '],

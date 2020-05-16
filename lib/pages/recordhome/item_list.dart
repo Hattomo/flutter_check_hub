@@ -13,7 +13,7 @@ class ItemList extends StatefulWidget {
 class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
-    final UserData userdata = Provider.of<UserData>(context) ?? UserData();
+    final User userdata = Provider.of<User>(context) ?? User();
     //print(userdata.itemstitle.length);
 
     /*
@@ -34,7 +34,7 @@ class _ItemListState extends State<ItemList> {
             itemCount: userdata.itemstitle.length,
             itemBuilder: (BuildContext context, int index) {
               return ItemTile(
-                  itemdata: ItemData(
+                  itemdata: Item(
                 title: userdata.itemstitle[index],
                 icon: userdata.itemsicon[index],
                 id: userdata.itemsid[index],

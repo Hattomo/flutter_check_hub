@@ -37,7 +37,7 @@ class _RecordHomeState extends State<RecordHome> {
 
   @override
   Widget build(BuildContext context) {
-    final UserData user = Provider.of(context);
+    final User user = Provider.of(context);
 
     void showCreateItem() {
       Navigator.of(context).push(
