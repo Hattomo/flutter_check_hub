@@ -103,23 +103,18 @@ class _ItemTileState extends State<ItemTile> {
   Widget build(BuildContext context) {
     final UserData user = Provider.of(context);
     void showEditItem() {
-      showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          isScrollControlled: true,
-          context: context,
-          builder: (maincontext) {
-            return Provider.value(
-              value: widget.itemdata,
-              child: Container(
-                color: Colors.grey[200],
-                height: MediaQuery.of(context).size.height,
-                child: EditItemHome(
-                  user: user,
-                  itemid: widget.itemdata.id,
-                ),
-              ),
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return EditItemHome(
+              user: user,
+              itemid: widget.itemdata.id,
+              itemdata: widget.itemdata,
             );
-          });
+          },
+          fullscreenDialog: true,
+        ),
+      );
     }
 
     void showDeleteDailog() {

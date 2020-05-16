@@ -30,14 +30,14 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
       int listindex = 0;
       // get max
       for (int i = date - 30; i <= date; i++) {
-        print(cnt);
+        //print(cnt);
         if (listindex < value.length) {
           if ((value[listindex][2]).toInt() != i) {
             items.add(makeGroupData(cnt, 0));
-            print('$cnt:0');
+            //print('$cnt:0');
           } else if ((value[listindex][2]).toInt() == i) {
             items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
-            print('$cnt:${value[listindex][0]}');
+            //print('$cnt:${value[listindex][0]}');
             if (listindex == 0) {
               maxvalue = double.parse(value[listindex][0]);
             } else if (double.parse(value[listindex][0]) > maxvalue) {
@@ -45,15 +45,15 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
             }
             listindex++;
           }
-          print(listindex);
+          //print(listindex);
         } else {
           items.add(makeGroupData(cnt, 0));
         }
         cnt++;
       }
-      print(items.length);
+      //print(items.length);
     });
-    print(items);
+    //print(items);
     return items;
   }
 
@@ -121,7 +121,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                                 margin: 20,
                                 reservedSize: 14.0,
                                 getTitles: (double value) {
-                                  print(value);
+                                  //print(value);
                                   switch (value.toInt()) {
                                     case 1:
                                       return '30';

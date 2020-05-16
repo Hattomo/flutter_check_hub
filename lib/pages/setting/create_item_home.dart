@@ -29,155 +29,139 @@ class _CreateItemHomeState extends State<CreateItemHome> {
     //print('user uid: ${widget.user.uid}');
     //print('user itemsid: ${widget.user.itemsid}');
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: const Text('Create Item'),
+        actions: [
+          FlatButton(
+            child: const Text('Done'),
+            onPressed: () async {
+              if (_formKey.currentState.validate()) {
+                dataServiceItem.createItemData(
+                  uid: widget.user.uid,
+                  title: currenttitle,
+                  icon: currenticon,
+                  unit: currentunit,
+                  dataType: 1,
+                  itemsid: widget.user.itemsid,
+                  itemstitle: widget.user.itemstitle,
+                  itemsicon: widget.user.itemsicon,
+                  itemsunit: widget.user.itemsunit,
+                );
+                Navigator.pop(context);
+              }
+            },
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            Container(
-              height: 24.0,
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.blue,
-              height: 60.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FlatButton(
-                    child: const Text('Cancel'),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                  const Text(
-                    'Create Item',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  FlatButton(
-                    child: const Text('Done'),
-                    onPressed: () async {
-                      if (_formKey.currentState.validate()) {
-                        dataServiceItem.createItemData(
-                          uid: widget.user.uid,
-                          title: currenttitle,
-                          icon: currenticon,
-                          unit: currentunit,
-                          dataType: 1,
-                          itemsid: widget.user.itemsid,
-                          itemstitle: widget.user.itemstitle,
-                          itemsicon: widget.user.itemsicon,
-                          itemsunit: widget.user.itemsunit,
-                        );
-                        Navigator.pop(context);
-                      }
-                    },
-                  )
-                ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              const SizedBox(
+                height: 20.0,
               ),
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(
-                    height: 20.0,
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  title: TextFormField(
+                    decoration:
+                        textInputDecoration.copyWith(hintText: 'Title 🚀'),
+                    validator: (String val) =>
+                        val.isEmpty ? 'Please enter a title' : null,
+                    onChanged: (String val) =>
+                        setState(() => currenttitle = val),
                   ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      title: TextFormField(
-                        decoration:
-                            textInputDecoration.copyWith(hintText: 'Title 🚀'),
-                        validator: (String val) =>
-                            val.isEmpty ? 'Please enter a title' : null,
-                        onChanged: (String val) =>
-                            setState(() => currenttitle = val),
-                      ),
-                      leading: const Icon(Icons.title),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20.0,
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                        title: const Text('Data Type'),
-                        leading: const Icon(Icons.style),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        subtitle: const Text('current data type'),
-                        onTap: () async {
-                          currentdataType = await Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return DataTypeSetting();
-                          }));
-                          print('currentdataType: $currentdataType');
-                        }),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                        leading: const Icon(Icons.ac_unit),
-                        title: TextFormField(
-                          decoration:
-                              textInputDecoration.copyWith(hintText: 'Unit 🐣'),
-                          validator: (String val) =>
-                              val.isEmpty ? 'Please enter a title' : null,
-                          onChanged: (String val) =>
-                              setState(() => currentunit = val),
-                        )),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: const Icon(Icons.insert_emoticon),
-                      title: TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Please input one emoji 😀'),
-                        validator: (String val) =>
-                            val.isEmpty ? 'Please enter a title' : null,
-                        onChanged: (String val) =>
-                            setState(() => currenticon = val),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: const Icon(Icons.repeat),
-                      title: const Text('Repeat'),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/repeatSetting'),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: const Icon(Icons.notifications),
-                      title: const Text('Notification'),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {},
-                    ),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    child: ListTile(
-                      leading: const Icon(Icons.iso),
-                      title: TextFormField(
-                        decoration: textInputDecoration.copyWith(
-                            hintText: 'Please input goal 🎉'),
-                        validator: (String val) =>
-                            val.isEmpty ? 'Please enter a goal' : null,
-                        onChanged: (String val) =>
-                            setState(() => currentgoal = val),
-                        onTap: () {},
-                      ),
-                    ),
-                  ),
-                ],
+                  leading: const Icon(Icons.title),
+                ),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 20.0,
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                    title: const Text('Data Type'),
+                    leading: const Icon(Icons.style),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                    subtitle: const Text('current data type'),
+                    onTap: () async {
+                      currentdataType = await Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return DataTypeSetting();
+                      }));
+                      print('currentdataType: $currentdataType');
+                    }),
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                    leading: const Icon(Icons.ac_unit),
+                    title: TextFormField(
+                      decoration:
+                          textInputDecoration.copyWith(hintText: 'Unit 🐣'),
+                      validator: (String val) =>
+                          val.isEmpty ? 'Please enter a title' : null,
+                      onChanged: (String val) =>
+                          setState(() => currentunit = val),
+                    )),
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  leading: const Icon(Icons.insert_emoticon),
+                  title: TextFormField(
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Please input one emoji 😀'),
+                    validator: (String val) =>
+                        val.isEmpty ? 'Please enter a title' : null,
+                    onChanged: (String val) =>
+                        setState(() => currenticon = val),
+                  ),
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  leading: const Icon(Icons.repeat),
+                  title: const Text('Repeat'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () => Navigator.pushNamed(context, '/repeatSetting'),
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  leading: const Icon(Icons.notifications),
+                  title: const Text('Notification'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {},
+                ),
+              ),
+              Container(
+                color: Colors.white,
+                child: ListTile(
+                  leading: const Icon(Icons.iso),
+                  title: TextFormField(
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Please input goal 🎉'),
+                    validator: (String val) =>
+                        val.isEmpty ? 'Please enter a goal' : null,
+                    onChanged: (String val) =>
+                        setState(() => currentgoal = val),
+                    onTap: () {},
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -38,20 +38,16 @@ class _RecordHomeState extends State<RecordHome> {
   @override
   Widget build(BuildContext context) {
     final UserData user = Provider.of(context);
+
     void showCreateItem() {
-      showModalBottomSheet(
-          backgroundColor: Colors.transparent,
-          isScrollControlled: true,
-          context: context,
-          builder: (maincontext) {
-            return Container(
-              color: Colors.grey[200],
-              height: MediaQuery.of(context).size.height,
-              child: CreateItemHome(
-                user: user,
-              ),
-            );
-          });
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return CreateItemHome(user: user);
+          },
+          fullscreenDialog: true,
+        ),
+      );
     }
 
     return GestureDetector(
