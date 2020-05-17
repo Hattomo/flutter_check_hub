@@ -20,6 +20,8 @@ class _GraphBuilderState extends State<GraphBuilder> {
     else if (widget.item.dataType == 'Time')
       return BarGraphBuilder(widget.item);
     else
-      return const SizedBox();
+      return const SizedBox(
+        height: 0.0,
+      );
   }
 }

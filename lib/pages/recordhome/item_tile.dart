@@ -100,10 +100,11 @@ class _ItemTileState extends State<ItemTile> {
         });
   }
 
-  void showTimeDialog() {
+  void showTimeDialog(DateTime dateTime) {
     showDialog(
         context: context,
         builder: (builder) {
+          Duration currenttime;
           return Dialog(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
@@ -120,18 +121,27 @@ class _ItemTileState extends State<ItemTile> {
                     padding: const EdgeInsets.all(16.0),
                     child: CupertinoTimerPicker(
                       mode: CupertinoTimerPickerMode.hms,
-                      onTimerDurationChanged: (val) => null,
+                      onTimerDurationChanged: (val) => currenttime = val,
                     ),
                   ),
                   ButtonBar(
                     children: [
                       FlatButton(
                         child: const Text('Cancel'),
-                        onPressed: () {},
+                        onPressed: () => Navigator.pop(context),
                       ),
                       FlatButton(
                         child: const Text('Done'),
-                        onPressed: () {},
+                        onPressed: () {
+                          databaseServiceItem.createItemDailyData(
+                            widget.itemdata.id,
+                            databaseKey.datetimetKeyFormatter(dateTime),
+                            '${currenttime.inHours.toString().padLeft(2, '0')}:${(currenttime.inMinutes % 60).toString().padLeft(2, '0')}:${(currenttime.inSeconds % 60).toString().padLeft(2, '0')}',
+                            dateTime,
+                          );
+                          setState(() {});
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),
@@ -142,7 +152,7 @@ class _ItemTileState extends State<ItemTile> {
         });
   }
 
-  void showStringDialog() {
+  void showStringDialog(DateTime dateTime) {
     final _formKey = GlobalKey<FormState>();
     String _currentdata;
     showDialog(
@@ -175,11 +185,24 @@ class _ItemTileState extends State<ItemTile> {
                   children: [
                     FlatButton(
                       child: const Text('Cancel'),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     FlatButton(
                       child: const Text('Done'),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
+                          databaseServiceItem.createItemDailyData(
+                            widget.itemdata.id,
+                            databaseKey.datetimetKeyFormatter(dateTime),
+                            _currentdata.toString(),
+                            dateTime,
+                          );
+                          setState(() {});
+                          Navigator.pop(context);
+                        }
+                      },
                     ),
                   ],
                 )
@@ -265,7 +288,7 @@ class _ItemTileState extends State<ItemTile> {
     }
 
     final DateTime dateTime = Provider.of(context);
-    String itemTextData;
+    dynamic itemTextData;
     return FutureBuilder(
       future: databaseServiceItem.readItemDailyData(
           widget.itemdata.id, databaseKey.datetimetKeyFormatter(dateTime)),
@@ -293,7 +316,11 @@ class _ItemTileState extends State<ItemTile> {
                   children: [
                     Text(
                       widget.itemdata.title,
-                      style: const TextStyle(fontSize: 13.0),
+                      softWrap: true,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 13.0,
+                      ),
                     ),
                     const SizedBox(
                       height: 5.0,
@@ -305,15 +332,26 @@ class _ItemTileState extends State<ItemTile> {
                       )
                     else
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            itemTextData,
-                            style: const TextStyle(fontSize: 20.0),
+                          Flexible(
+                            child: Text(
+                              itemTextData,
+                              //overflow: TextOverflow.ellipsis,
+                              style: widget.itemdata.dataType == 'Text'
+                                  ? const TextStyle(fontSize: 11.0)
+                                  : const TextStyle(fontSize: 20.0),
+                            ),
                           ),
                           const SizedBox(
-                            width: 20.0,
+                            width: 10.0,
                           ),
-                          Text(widget.itemdata.unit)
+                          Text(
+                            widget.itemdata.unit,
+                            //overflow: TextOverflow.ellipsis,
+                          ),
                         ],
                       )
                   ],
@@ -383,9 +421,9 @@ class _ItemTileState extends State<ItemTile> {
                   if (widget.itemdata.dataType == 'Number') {
                     return showNumberDialog(dateTime);
                   } else if (widget.itemdata.dataType == 'Text') {
-                    return showStringDialog();
+                    return showStringDialog(dateTime);
                   } else if (widget.itemdata.dataType == 'Time') {
-                    return showTimeDialog();
+                    return showTimeDialog(dateTime);
                   }
                 }),
           );

@@ -26,38 +26,74 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
 
   Future<List<BarChartGroupData>> getBarGroupData() async {
     final List<BarChartGroupData> items = [];
-    await databaseServiceItem.getListItemdata(widget.itemData.id).then((value) {
-      datalist = value;
-      final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
-      int cnt = 0;
-      int listindex = 0;
-      // get max
-      for (int i = date - 30; i <= date; i++) {
-        //print(cnt);
-        if (listindex < value.length) {
-          if ((value[listindex][2]).toInt() != i) {
-            items.add(makeGroupData(cnt, 0));
-            //print('$cnt:0');
-          } else if ((value[listindex][2]).toInt() == i) {
-            items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
-            //print('$cnt:${value[listindex][0]}');
-            if (listindex == 0) {
-              maxvalue = double.parse(value[listindex][0]);
-            } else if (double.parse(value[listindex][0]) > maxvalue) {
-              maxvalue = double.parse(value[listindex][0]);
+    try {
+      await databaseServiceItem
+          .getListItemdata(widget.itemData.id)
+          .then((value) {
+        datalist = value;
+        //print('datalist${datalist}');
+        if (widget.itemData.dataType == 'Time') {
+          for (int i = 0; i < value.length; i++) {
+            final List<dynamic> time = [];
+            print(value[i][0].substring(0, 1));
+            if (value[i][0].substring(0, 1) == '0') {
+              time.add(value[i][0].substring(1, 2));
+            } else {
+              time.add(value[i][0].substring(0, 2));
             }
-            listindex++;
+            if (value[i][0].substring(3, 4) == '0') {
+              time.add(value[i][0].substring(4, 5));
+            } else {
+              time.add(value[i][0].substring(3, 5));
+            }
+            if (value[i][0].substring(6, 7) == '0') {
+              time.add(value[i][0].substring(7, 8));
+            } else {
+              time.add(value[i][0].substring(6, 8));
+            }
+            value[i][0] = (int.parse(time[0]) * 3600 +
+                    int.parse(time[1]) * 60 +
+                    int.parse(time[2]))
+                .toString();
           }
-          //print(listindex);
-        } else {
-          items.add(makeGroupData(cnt, 0));
         }
-        cnt++;
-      }
-      //print(items.length);
-    });
-    //print(items);
-    return items;
+        final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
+        int cnt = 0;
+        int listindex = 0;
+        print('${widget.itemData.title} $value');
+
+        // get max
+        for (int i = date - 30; i <= date; i++) {
+          //print(cnt);
+          if (listindex < value.length) {
+            if ((value[listindex][2]).toInt() != i) {
+              items.add(makeGroupData(cnt, 0));
+              //print('$cnt:0');
+            } else if ((value[listindex][2]).toInt() == i) {
+              items.add(makeGroupData(cnt, double.parse(value[listindex][0])));
+              //print('$cnt:${value[listindex][0]}');
+              if (listindex == 0) {
+                maxvalue = double.parse(value[listindex][0]);
+              } else if (double.parse(value[listindex][0]) > maxvalue) {
+                maxvalue = double.parse(value[listindex][0]);
+              }
+              listindex++;
+            }
+            //print(listindex);
+          } else {
+            items.add(makeGroupData(cnt, 0));
+          }
+          cnt++;
+        }
+        print('max:$maxvalue');
+        //print(items.length);
+      });
+      //print('${widget.itemData.title} $items');
+      return items;
+    } catch (e) {
+      print(e);
+      return [];
+    }
   }
 
   @override
@@ -112,6 +148,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                           MaterialPageRoute(
                               fullscreenDialog: true,
                               builder: (content) {
+                                print('ddddddddd$datalist');
                                 return DataListView(
                                   item: widget.itemData,
                                   datalist: datalist,
@@ -133,7 +170,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: BarChart(
                           BarChartData(
-                            maxY: maxvalue * 1.1,
+                            maxY: maxvalue, //* 1.1,
                             titlesData: FlTitlesData(
                               show: true,
                               bottomTitles: SideTitles(

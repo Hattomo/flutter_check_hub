@@ -13,7 +13,7 @@ class GraphHome extends StatelessWidget {
         itemCount: userdata.itemsid.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(top: 8.0, right: 8, left: 8),
             child: GraphBuilder(
               item: Item(
                 title: userdata.itemstitle[index],
