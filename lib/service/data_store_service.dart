@@ -47,7 +47,7 @@ class DatabaseServiceItem {
     @required Item item,
   }) async {
     final String id = itemCollection.document().documentID;
-    user.itemsid.add(item.id);
+    user.itemsid.add(id);
     user.itemstitle.add(item.title);
     user.itemsicon.add(item.icon);
     user.itemsunit.add(item.unit);
@@ -146,7 +146,7 @@ class DatabaseServiceItem {
   }
 
   Future<void> createItemDailyData(
-      String itemId, String documentId, var data, DateTime dateTime) async {
+      String itemId, String documentId, dynamic data, DateTime dateTime) async {
     final int date = dateTime.difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
@@ -160,7 +160,7 @@ class DatabaseServiceItem {
   }
 
   Future<void> updateItemDailyData(
-      String itemId, String documentId, var data, DateTime dateTime) async {
+      String itemId, String documentId, dynamic data, DateTime dateTime) async {
     final int date = dateTime.difference(DateTime(2020, 1, 1)).inDays;
     await itemCollection
         .document(itemId)
