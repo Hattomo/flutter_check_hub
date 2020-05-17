@@ -29,6 +29,7 @@ class DatabaseServiceItem {
         user.itemstitle[i] = item.title;
         user.itemsicon[i] = item.icon;
         user.itemsunit[i] = item.unit;
+        user.itemsdataType[i] = item.dataType;
       }
     }
     databaseServiceUser.updateuserData(
@@ -37,6 +38,7 @@ class DatabaseServiceItem {
       user.itemstitle,
       user.itemsicon,
       user.itemsunit,
+      user.itemsdataType,
     );
   }
 
@@ -49,6 +51,7 @@ class DatabaseServiceItem {
     user.itemstitle.add(item.title);
     user.itemsicon.add(item.icon);
     user.itemsunit.add(item.unit);
+    user.itemsdataType.add(item.dataType);
     await itemCollection.document(id).setData({
       'title': item.title,
       'icon': item.icon,
@@ -63,6 +66,7 @@ class DatabaseServiceItem {
       user.itemstitle,
       user.itemsicon,
       user.itemsunit,
+      user.itemsdataType,
     );
   }
 
@@ -80,10 +84,17 @@ class DatabaseServiceItem {
         user.itemstitle.removeAt(i);
         user.itemsicon.removeAt(i);
         user.itemsunit.removeAt(i);
+        user.itemsdataType.removeAt(i);
       }
     }
-    databaseServiceUser.updateuserData(user.uid, user.itemsid, user.itemstitle,
-        user.itemsicon, user.itemsunit);
+    databaseServiceUser.updateuserData(
+      user.uid,
+      user.itemsid,
+      user.itemstitle,
+      user.itemsicon,
+      user.itemsunit,
+      user.itemsdataType,
+    );
   }
 
   // itemmodels list from snapshot

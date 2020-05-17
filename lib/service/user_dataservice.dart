@@ -15,12 +15,14 @@ class DatabaseServiceUser {
     List<String> itemstitle,
     List<String> itemsicon,
     List<String> itemsunit,
+    List<String> itemsdataType,
   ) async {
     return await userCollection.document(uid).setData({
       'itemsid': itemsid,
       'itemstitle': itemstitle,
       'itemsicon': itemsicon,
       'itemsunit': itemsunit,
+      'itemsdataType': itemsdataType,
       'uid': uid,
     });
   }
@@ -31,6 +33,7 @@ class DatabaseServiceUser {
       'itemstitle': [],
       'itemsicon': [],
       'itemsunit': [],
+      'itemsdataType': [],
       'uid': uid,
     });
   }
@@ -59,6 +62,7 @@ class DatabaseServiceUser {
         itemstitle: List.from(snapshot.data['itemstitle']) ?? [' '],
         itemsicon: List.from(snapshot.data['itemsicon']) ?? [' '],
         itemsunit: List.from(snapshot.data['itemsunit']) ?? [' '],
+        itemsdataType: List.from(snapshot.data['itemsdataType']) ?? [' '],
         uid: snapshot.data['uid'] ?? ' ',
       );
     } catch (e) {

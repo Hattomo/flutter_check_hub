@@ -19,7 +19,7 @@ class _EditItemHomeState extends State<EditItemHome> {
   String currentunit;
   String currentgoal;
   String currenticon;
-  int currentdataType;
+  String currentdataType;
   int currentrepeatsetting;
 
   final DatabaseServiceItem dataServiceItem = DatabaseServiceItem();
@@ -43,7 +43,7 @@ class _EditItemHomeState extends State<EditItemHome> {
           FlatButton(
             child: const Text('Done'),
             onPressed: () async {
-              if (_formKey.currentState.validate()) {
+              if (_formKey.currentState.validate() && currentdataType != null) {
                 dataServiceItem.updateItemData(
                   user: User(
                     uid: widget.user.uid,
@@ -51,13 +51,14 @@ class _EditItemHomeState extends State<EditItemHome> {
                     itemstitle: widget.user.itemstitle,
                     itemsicon: widget.user.itemsicon,
                     itemsunit: widget.user.itemsunit,
+                    itemsdataType: widget.user.itemsdataType,
                   ),
                   item: Item(
                     id: widget.itemdata.id,
                     title: currenttitle ?? widget.itemdata.title,
                     icon: currenticon ?? widget.itemdata.icon,
                     unit: currentunit ?? widget.itemdata.unit,
-                    dataType: 1,
+                    dataType: 'Number',
                   ),
                 );
                 Navigator.pop(context);
@@ -99,13 +100,14 @@ class _EditItemHomeState extends State<EditItemHome> {
                     title: const Text('Data Type'),
                     leading: const Icon(Icons.style),
                     trailing: const Icon(Icons.arrow_forward_ios),
-                    subtitle: const Text('current data type'),
+                    subtitle: Text(widget.itemdata.dataType),
                     onTap: () async {
                       currentdataType = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return DataTypeSetting();
                       }));
                       print('currentdataType: $currentdataType');
+                      setState(() => null);
                     }),
               ),
               Container(

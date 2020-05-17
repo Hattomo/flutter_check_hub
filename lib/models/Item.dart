@@ -10,7 +10,7 @@ class Item {
 
   String title;
   String icon;
-  int dataType;
+  String dataType;
   String unit;
   String id;
   bool isInUse;

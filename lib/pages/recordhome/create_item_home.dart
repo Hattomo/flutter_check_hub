@@ -18,7 +18,7 @@ class _CreateItemHomeState extends State<CreateItemHome> {
   String currentunit;
   String currentgoal;
   String currenticon;
-  int currentdataType;
+  String currentdataType;
   int currentrepeatsetting;
 
   final DatabaseServiceItem dataServiceItem = DatabaseServiceItem();
@@ -50,12 +50,13 @@ class _CreateItemHomeState extends State<CreateItemHome> {
                     itemstitle: widget.user.itemstitle,
                     itemsicon: widget.user.itemsicon,
                     itemsunit: widget.user.itemsunit,
+                    itemsdataType: widget.user.itemsdataType,
                   ),
                   item: Item(
                     title: currenttitle,
                     icon: currenticon,
                     unit: currentunit,
-                    dataType: 1,
+                    dataType: 'Number',
                   ),
                 );
                 Navigator.pop(context);
@@ -96,13 +97,16 @@ class _CreateItemHomeState extends State<CreateItemHome> {
                     title: const Text('Data Type'),
                     leading: const Icon(Icons.style),
                     trailing: const Icon(Icons.arrow_forward_ios),
-                    subtitle: const Text('current data type'),
+                    subtitle: currentdataType == null
+                        ? const Text('choose data type')
+                        : Text(currentdataType),
                     onTap: () async {
                       currentdataType = await Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
                         return DataTypeSetting();
                       }));
                       print('currentdataType: $currentdataType');
+                      setState(() => null);
                     }),
               ),
               Container(

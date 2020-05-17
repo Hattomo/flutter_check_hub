@@ -23,12 +23,12 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
       'Countup'
     ];
 
-    int getindex() {
-      int index = -1;
+    String getindex() {
+      String index = '';
       for (int i = 0; i < 10; i++) {
         if (isSelected[i] == true) {
           print(i);
-          index = i;
+          index = title[i];
         }
       }
       return index;
@@ -43,8 +43,8 @@ class _DataTypeSettingState extends State<DataTypeSetting> {
               color: Colors.white,
             ),
             onPressed: () async {
-              final int index = getindex();
-              Navigator.pop<int>(context, index);
+              final String index = getindex();
+              Navigator.pop<String>(context, index);
             },
           ),
         ),

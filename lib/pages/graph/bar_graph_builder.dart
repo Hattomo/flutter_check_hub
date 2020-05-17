@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/Item.dart';
+import 'package:flutter_check_hub/pages/graph/listview_data.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
 
 @immutable
@@ -21,10 +22,12 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
   double maxvalue;
   double minvalue;
   int touchedGroupIndex;
+  List<dynamic> datalist;
 
   Future<List<BarChartGroupData>> getBarGroupData() async {
     final List<BarChartGroupData> items = [];
     await databaseServiceItem.getListItemdata(widget.itemData.id).then((value) {
+      datalist = value;
       final int date = DateTime.now().difference(DateTime(2020, 1, 1)).inDays;
       int cnt = 0;
       int listindex = 0;
@@ -73,28 +76,49 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.itemData.icon,
-                    style: const TextStyle(fontSize: 22),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        widget.itemData.icon,
+                        style: const TextStyle(fontSize: 22),
+                      ),
+                      const SizedBox(
+                        width: 38,
+                      ),
+                      Text(
+                        widget.itemData.title,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 22),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      const Text(
+                        'Recent 30 days',
+                        style:
+                            TextStyle(color: Color(0xff77839a), fontSize: 16),
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 38,
-                  ),
-                  Text(
-                    widget.itemData.title,
-                    style: const TextStyle(color: Colors.black, fontSize: 22),
-                  ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  const Text(
-                    'This Month',
-                    style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-                  ),
+                  IconButton(
+                      icon: const Icon(Icons.list),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                              fullscreenDialog: true,
+                              builder: (content) {
+                                return DataListView(
+                                  item: widget.itemData,
+                                  datalist: datalist,
+                                );
+                              }),
+                        );
+                      }),
                 ],
               ),
               const SizedBox(

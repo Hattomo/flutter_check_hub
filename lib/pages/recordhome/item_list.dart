@@ -14,6 +14,7 @@ class _ItemListState extends State<ItemList> {
   @override
   Widget build(BuildContext context) {
     final User userdata = Provider.of<User>(context) ?? User();
+    print(userdata.itemsdataType);
     //print(userdata.itemstitle.length);
 
     /*
@@ -39,6 +40,7 @@ class _ItemListState extends State<ItemList> {
                 icon: userdata.itemsicon[index],
                 id: userdata.itemsid[index],
                 unit: userdata.itemsunit[index],
+                dataType: userdata.itemsdataType[index],
               ));
             },
           );

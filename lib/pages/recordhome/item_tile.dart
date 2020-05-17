@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/models/Item.dart';
 import 'package:flutter_check_hub/models/user.dart';
+import 'package:flutter_check_hub/pages/graph/listview_data.dart';
 import 'package:flutter_check_hub/pages/recordhome/edit_item_home.dart';
 import 'package:flutter_check_hub/service/data_store_service.dart';
 import 'package:flutter_check_hub/service/datebase_key.dart';
@@ -99,6 +100,95 @@ class _ItemTileState extends State<ItemTile> {
         });
   }
 
+  void showTimeDialog() {
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            child: CupertinoTheme(
+              data: const CupertinoThemeData(
+                  textTheme: CupertinoTextThemeData(
+                      pickerTextStyle: TextStyle(color: Colors.blue))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text('Input Date'),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: CupertinoTimerPicker(
+                      mode: CupertinoTimerPickerMode.hms,
+                      onTimerDurationChanged: (val) => null,
+                    ),
+                  ),
+                  ButtonBar(
+                    children: [
+                      FlatButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {},
+                      ),
+                      FlatButton(
+                        child: const Text('Done'),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  void showStringDialog() {
+    final _formKey = GlobalKey<FormState>();
+    String _currentdata;
+    showDialog(
+        context: context,
+        builder: (builder) {
+          return Dialog(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('Input'),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 8.0),
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      minLines: 3,
+                      maxLines: null,
+                      textAlign: TextAlign.start,
+                      decoration: textInputDecoration.copyWith(),
+                      validator: (val) =>
+                          val.isEmpty ? 'Please enter text' : null,
+                      onChanged: (val) => setState(() => _currentdata = val),
+                    ),
+                  ),
+                ),
+                ButtonBar(
+                  children: [
+                    FlatButton(
+                      child: const Text('Cancel'),
+                      onPressed: () {},
+                    ),
+                    FlatButton(
+                      child: const Text('Done'),
+                      onPressed: () {},
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of(context);
@@ -185,7 +275,7 @@ class _ItemTileState extends State<ItemTile> {
             itemTextData = 'Error Occur! Retry Later';
           }
           if (!snapshot.hasData) {
-            itemTextData = 'No Data Available';
+            itemTextData = 'No Data Avaiable';
           }
           if (snapshot.hasData) {
             itemTextData = snapshot.data;
@@ -193,63 +283,111 @@ class _ItemTileState extends State<ItemTile> {
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
-              leading: CircleAvatar(
-                child: Text(widget.itemdata.icon),
-                backgroundColor: Colors.blue,
-              ),
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.itemdata.title,
-                    style: const TextStyle(fontSize: 13.0),
-                  ),
-                  const SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(itemTextData),
-                ],
-              ),
-              trailing: PopupMenuButton(
-                itemBuilder: (BuildContext context) {
-                  return [
-                    PopupMenuItem(
-                      child: Row(
-                        children: [
-                          const Icon(Icons.edit),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          const Text('Edit'),
-                        ],
-                      ),
-                      value: 0,
+                leading: CircleAvatar(
+                  child: Text(widget.itemdata.icon),
+                  backgroundColor: Colors.blue,
+                ),
+                title: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.itemdata.title,
+                      style: const TextStyle(fontSize: 13.0),
                     ),
-                    PopupMenuItem(
-                      child: Row(
-                        children: [
-                          const Icon(Icons.delete_forever),
-                          const SizedBox(
-                            width: 10.0,
-                          ),
-                          const Text('Delete')
-                        ],
-                      ),
-                      value: 1,
+                    const SizedBox(
+                      height: 5.0,
                     ),
-                  ];
-                },
-                onSelected: (val) {
-                  if (val == 0) {
-                    showEditItem();
-                  } else if (val == 1) {
-                    showDeleteDailog();
+                    if (itemTextData == 'No Data Avaiable')
+                      Text(
+                        itemTextData,
+                        style: const TextStyle(color: Colors.grey),
+                      )
+                    else
+                      Row(
+                        children: [
+                          Text(
+                            itemTextData,
+                            style: const TextStyle(fontSize: 20.0),
+                          ),
+                          const SizedBox(
+                            width: 20.0,
+                          ),
+                          Text(widget.itemdata.unit)
+                        ],
+                      )
+                  ],
+                ),
+                trailing: PopupMenuButton(
+                  itemBuilder: (BuildContext context) {
+                    return [
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.list),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            const Text('List'),
+                          ],
+                        ),
+                        value: 0,
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.edit),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            const Text('Edit'),
+                          ],
+                        ),
+                        value: 1,
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.delete_forever),
+                            const SizedBox(
+                              width: 10.0,
+                            ),
+                            const Text('Delete')
+                          ],
+                        ),
+                        value: 2,
+                      ),
+                    ];
+                  },
+                  onSelected: (val) {
+                    if (val == 0) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            fullscreenDialog: true,
+                            builder: (content) {
+                              return DataListView(
+                                item: widget.itemdata,
+                              );
+                            }),
+                      );
+                    } else if (val == 1) {
+                      showEditItem();
+                    } else if (val == 2) {
+                      showDeleteDailog();
+                    }
+                  },
+                ),
+                //onTap: () => showNumberDialog(dateTime),
+                onTap: () {
+                  print(widget.itemdata.dataType);
+                  if (widget.itemdata.dataType == 'Number') {
+                    return showNumberDialog(dateTime);
+                  } else if (widget.itemdata.dataType == 'Text') {
+                    return showStringDialog();
+                  } else if (widget.itemdata.dataType == 'Time') {
+                    return showTimeDialog();
                   }
-                },
-              ),
-              onTap: () => showNumberDialog(dateTime),
-            ),
+                }),
           );
         } else {
           return Container(
