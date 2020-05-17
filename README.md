@@ -1,16 +1,30 @@
 # flutter_check_hub
 
-A new Flutter project.
+## Status 
+![flutter build Android](https://github.com/Hattomo/flutter_check_hub/workflows/flutter%20build%20Android/badge.svg)
+![flutter test](https://github.com/Hattomo/flutter_check_hub/workflows/flutter%20test/badge.svg)
+![flutter lint](https://github.com/Hattomo/flutter_check_hub/workflows/flutter%20lint/badge.svg)
+
+## WIP in very early stage 🐣
+Open Source flutter Life Log & ToDo app 
+
+## Supported Platform
+| Android | iOS | macOS | Windows | Linux | Fuchsia | Web |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| 🥚 | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+
+##### Status  
+❌ Not Supported  
+🥚 early stage  
+🐣 In alpha  
+🐥 In beta  
+🐤 Preview  
+🐔 Supported !  
+🐧 
 
 ## Getting Started
+To start development, please run
+```sh
+git clone https://github.com/Hattomo/flutter_check_hub.git
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
