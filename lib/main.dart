@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_check_hub/pages/auth/auth_home.dart';
 import 'package:flutter_check_hub/pages/home.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_setting.dart';
 
-void main() {
-  //WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //SystemChrome.setEnabledSystemUIOverlays([]);
+  await Firebase.initializeApp();
   runApp(CheckHub());
 }
 

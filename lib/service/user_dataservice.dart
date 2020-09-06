@@ -7,7 +7,7 @@ class DatabaseServiceUser {
 
   // collection reference
   final CollectionReference userCollection =
-      Firestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   Future<void> updateuserData(
     String uid,
@@ -17,7 +17,7 @@ class DatabaseServiceUser {
     List<String> itemsunit,
     List<String> itemsdataType,
   ) async {
-    return await userCollection.document(uid).setData({
+    return await userCollection.doc(uid).set({
       'itemsid': itemsid,
       'itemstitle': itemstitle,
       'itemsicon': itemsicon,
@@ -28,7 +28,7 @@ class DatabaseServiceUser {
   }
 
   Future<void> createuserData(String uid) async {
-    return await userCollection.document(uid).setData({
+    return await userCollection.doc(uid).set({
       'itemsid': [],
       'itemstitle': [],
       'itemsicon': [],
@@ -40,13 +40,13 @@ class DatabaseServiceUser {
 
   Future<void> deleteuserData(User user) async {
     print(user.uid);
-    return await userCollection.document(user.uid).delete();
+    return await userCollection.doc(user.uid).delete();
   }
 
   Stream<User> user(User user) {
     try {
       return userCollection
-          .document(user.uid)
+          .doc(user.uid)
           .snapshots()
           .map(_userDataFromSnapshot);
     } catch (e) {
@@ -58,12 +58,12 @@ class DatabaseServiceUser {
   User _userDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
       return User(
-        itemsid: List.from(snapshot.data['itemsid']) ?? [' '],
-        itemstitle: List.from(snapshot.data['itemstitle']) ?? [' '],
-        itemsicon: List.from(snapshot.data['itemsicon']) ?? [' '],
-        itemsunit: List.from(snapshot.data['itemsunit']) ?? [' '],
-        itemsdataType: List.from(snapshot.data['itemsdataType']) ?? [' '],
-        uid: snapshot.data['uid'] ?? ' ',
+        itemsid: List.from(snapshot.data()['itemsid']) ?? [' '],
+        itemstitle: List.from(snapshot.data()['itemstitle']) ?? [' '],
+        itemsicon: List.from(snapshot.data()['itemsicon']) ?? [' '],
+        itemsunit: List.from(snapshot.data()['itemsunit']) ?? [' '],
+        itemsdataType: List.from(snapshot.data()['itemsdataType']) ?? [' '],
+        uid: snapshot.data()['uid'] ?? ' ',
       );
     } catch (e) {
       print(e);

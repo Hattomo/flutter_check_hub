@@ -1,17 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 import 'package:flutter_check_hub/models/user.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  final auth.FirebaseAuth _auth = auth.FirebaseAuth.instance;
   // create user obj based on firebase user
-  User _userFromFirebaseUser(FirebaseUser user) {
+  User _userFromFirebaseUser(auth.User user) {
     return user != null ? User(uid: user.uid) : null;
   }
 
   // auth change user stream
   Stream<User> get user {
-    return _auth.onAuthStateChanged
+    return _auth
+        .authStateChanges()
         //.map((FirebaseUser user) => _userFromFirebaseUser(user));
         .map(_userFromFirebaseUser);
   }
@@ -19,9 +19,9 @@ class AuthService {
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      final AuthResult result = await _auth.signInWithEmailAndPassword(
+      final auth.UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      final FirebaseUser user = result.user;
+      final auth.User user = result.user;
       return user;
     } catch (error) {
       print(error.toString());
@@ -32,9 +32,9 @@ class AuthService {
   // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      final AuthResult result = await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      final FirebaseUser user = result.user;
+      final auth.UserCredential result = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      final auth.User user = result.user;
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());
