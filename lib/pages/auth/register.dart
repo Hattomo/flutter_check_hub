@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/service/auth_service.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
@@ -30,9 +31,12 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Register'),
+        centerTitle: true,
+      ),
       body: loading
-          ? const Text('Loading')
+          ? const Center(child: CupertinoActivityIndicator())
           : Container(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),

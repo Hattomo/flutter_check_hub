@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/service/auth_service.dart';
 import 'package:flutter_check_hub/service/user_dataservice.dart';
@@ -30,9 +31,12 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     //print("singin");
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Sign in'),
+        centerTitle: true,
+      ),
       body: loading
-          ? const Text('Loading')
+          ? const Center(child: CupertinoActivityIndicator())
           : Container(
               height: MediaQuery.of(context).size.height,
               padding:
