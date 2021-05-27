@@ -39,7 +39,7 @@ class _CreateItemHomeState extends State<CreateItemHome> {
         ),
         title: const Text('Create Item'),
         actions: [
-          FlatButton(
+          TextButton(
             child: const Text('Done'),
             onPressed: () async {
               if (_formKey.currentState.validate()) {

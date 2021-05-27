@@ -5,7 +5,7 @@ import 'package:flutter_check_hub/pages/home.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/repeat_setting.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //SystemChrome.setEnabledSystemUIOverlays([]);
   await Firebase.initializeApp();

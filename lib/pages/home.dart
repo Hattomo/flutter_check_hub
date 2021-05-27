@@ -41,6 +41,7 @@ class _CheckHubHomeState extends State<CheckHubHome>
     final User user = Provider.of<User>(context);
     return StreamProvider.value(
       value: DatabaseServiceUser().user(user),
+      initialData: null,
       child: DefaultTabController(
         length: 3,
         child: SafeArea(

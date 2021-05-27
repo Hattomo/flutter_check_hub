@@ -18,17 +18,13 @@ class CheckHubAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CheckHubAppBarState extends State<CheckHubAppBar> {
-  CalendarController _calendarController;
-
   @override
   void initState() {
     super.initState();
-    _calendarController = CalendarController();
   }
 
   @override
   void dispose() {
-    _calendarController.dispose();
     super.dispose();
   }
 
@@ -37,64 +33,92 @@ class _CheckHubAppBarState extends State<CheckHubAppBar> {
         backgroundColor: Colors.transparent,
         context: context,
         builder: (context) {
-          return Container(
-            //height: MediaQuery.of(context).size.height*(3/4),
-            decoration: const BoxDecoration(
-              color: Color(0xFFEEF2F5),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16.0),
-                topRight: Radius.circular(16.0),
-              ),
-            ),
-            child: TableCalendar(
-              calendarController: _calendarController,
-              locale: 'en_US',
-              initialSelectedDay: widget.dateTimeManager.selectedDate,
-              initialCalendarFormat: CalendarFormat.month,
-              calendarStyle: const CalendarStyle(
-                todayStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
+          DateTime _focusedDay = widget.dateTimeManager.selectedDate;
+          DateTime _selectedDay = widget.dateTimeManager.selectedDate;
+          CalendarFormat _calendarFormat = CalendarFormat.month;
+          return StatefulBuilder(builder: (context, setState) {
+            return Container(
+              decoration: const BoxDecoration(
+                color: Color(0xFFEEF2F5),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
                 ),
               ),
-              headerStyle: const HeaderStyle(
-                centerHeaderTitle: true,
-                formatButtonShowsNext: true,
-                //formatButtonDecoration: BoxDecoration(
-                //color: Colors.blue[200],
-                //borderRadius: BorderRadius.circular(5.0),
-                //),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TableCalendar(
+                    locale: 'en_US',
+                    firstDay: DateTime(1970, 1, 1),
+                    lastDay: DateTime(2100, 1, 1),
+                    focusedDay: widget.dateTimeManager.selectedDate,
+                    calendarFormat: _calendarFormat,
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay = widget.dateTimeManager.selectedDate;
+                        });
+                      }
+                    },
+                    onFormatChanged: (format) {
+                      if (_calendarFormat != format) {
+                        setState(() {
+                          _calendarFormat = format;
+                        });
+                      }
+                    },
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                    },
+                    calendarStyle: const CalendarStyle(
+                      todayTextStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    headerStyle: const HeaderStyle(
+                      titleCentered: false,
+                      formatButtonShowsNext: true,
+                      // formatButtonDecoration: BoxDecoration(
+                      //   color: Colors.blue[200],
+                      //   borderRadius: BorderRadius.circular(5.0),
+                      // ),
+                    ),
+                    calendarBuilders: CalendarBuilders(
+                      selectedBuilder: (context, date, events) {
+                        widget.dateTimeManager.setDate(date);
+                        return Container(
+                            margin: const EdgeInsets.all(4.0),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: Colors.pink[300],
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Text(
+                              date.day.toString(),
+                              style: const TextStyle(color: Colors.white),
+                            ));
+                      },
+                      todayBuilder: (context, date, events) => Container(
+                          margin: const EdgeInsets.all(4.0),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.blue[300],
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Text(
+                            date.day.toString(),
+                            style: const TextStyle(color: Colors.black),
+                          )),
+                    ),
+                  ),
+                ],
               ),
-              onDaySelected: (date, events) {
-                print(date.toIso8601String());
-              },
-              builders: CalendarBuilders(
-                selectedDayBuilder: (context, date, events) {
-                  widget.dateTimeManager.setDate(date);
-                  return Container(
-                      margin: const EdgeInsets.all(4.0),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: Colors.pink[300],
-                          borderRadius: BorderRadius.circular(10.0)),
-                      child: Text(
-                        date.day.toString(),
-                        style: const TextStyle(color: Colors.white),
-                      ));
-                },
-                todayDayBuilder: (context, date, events) => Container(
-                    margin: const EdgeInsets.all(4.0),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.blue[300],
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Text(
-                      date.day.toString(),
-                      style: const TextStyle(color: Colors.black),
-                    )),
-              ),
-            ),
-          );
+            );
+          });
         });
   }
 

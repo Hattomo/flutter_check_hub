@@ -103,11 +103,11 @@ class DatabaseServiceItem {
     return snapshot.docs.map((doc) {
       //print(doc.data);
       return Item(
-        title: doc.data()['title'] ?? '',
-        icon: doc.data()['icon'] ?? '',
-        unit: doc.data()['unit'] ?? '',
-        dataType: doc.data()['dataType'] ?? -100,
-        id: doc.data()['id'] ?? '',
+        title: doc['title'] ?? '',
+        icon: doc['icon'] ?? '',
+        unit: doc['unit'] ?? '',
+        dataType: doc['dataType'] ?? -100,
+        id: doc['id'] ?? '',
       );
     }).toList();
   }
@@ -115,11 +115,11 @@ class DatabaseServiceItem {
   //user data from snapshot
   Item _itemDataFromSnapshot(DocumentSnapshot snapshot) {
     return Item(
-      title: snapshot.data()['title'],
-      icon: snapshot.data()['icon'] ?? '',
-      unit: snapshot.data()['unit'] ?? '',
-      dataType: snapshot.data()['dataType'] ?? '',
-      id: snapshot.data()['id'] ?? '',
+      title: snapshot['title'],
+      icon: snapshot['icon'] ?? '',
+      unit: snapshot['unit'] ?? '',
+      dataType: snapshot['dataType'] ?? '',
+      id: snapshot['id'] ?? '',
     );
   }
 
@@ -202,9 +202,9 @@ class DatabaseServiceItem {
     final List<dynamic> list = [];
     for (int i = 0; i < data.docs.length; i++) {
       final List<dynamic> docdata = [
-        data.docs[i].data()['data'],
-        data.docs[i].data()['documentId'],
-        data.docs[i].data()['datadate'],
+        data.docs[i]['data'],
+        data.docs[i]['documentId'],
+        data.docs[i]['datadate'],
       ];
       list.add(docdata);
     }

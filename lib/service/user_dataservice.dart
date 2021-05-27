@@ -58,12 +58,12 @@ class DatabaseServiceUser {
   User _userDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
       return User(
-        itemsid: List.from(snapshot.data()['itemsid']) ?? [' '],
-        itemstitle: List.from(snapshot.data()['itemstitle']) ?? [' '],
-        itemsicon: List.from(snapshot.data()['itemsicon']) ?? [' '],
-        itemsunit: List.from(snapshot.data()['itemsunit']) ?? [' '],
-        itemsdataType: List.from(snapshot.data()['itemsdataType']) ?? [' '],
-        uid: snapshot.data()['uid'] ?? ' ',
+        itemsid: List.from(snapshot['itemsid']) ?? [' '],
+        itemstitle: List.from(snapshot['itemstitle']) ?? [' '],
+        itemsicon: List.from(snapshot['itemsicon']) ?? [' '],
+        itemsunit: List.from(snapshot['itemsunit']) ?? [' '],
+        itemsdataType: List.from(snapshot['itemsdataType']) ?? [' '],
+        uid: snapshot['uid'] ?? ' ',
       );
     } catch (e) {
       print(e);

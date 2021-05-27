@@ -73,7 +73,7 @@ class _LineGraphBuilderState extends State<LineGraphBuilder> {
               SizedBox(
                 width: 60,
                 height: 34,
-                child: FlatButton(
+                child: TextButton(
                   onPressed: () {
                     setState(() {
                       showAvg = !showAvg;
@@ -119,7 +119,7 @@ class _LineGraphBuilderState extends State<LineGraphBuilder> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 16),
@@ -138,7 +138,7 @@ class _LineGraphBuilderState extends State<LineGraphBuilder> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,
@@ -238,7 +238,7 @@ class _LineGraphBuilderState extends State<LineGraphBuilder> {
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 22,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
               color: Color(0xff68737d),
               fontWeight: FontWeight.bold,
               fontSize: 16),
@@ -257,7 +257,7 @@ class _LineGraphBuilderState extends State<LineGraphBuilder> {
         ),
         leftTitles: SideTitles(
           showTitles: true,
-          textStyle: const TextStyle(
+          getTextStyles: (value) => const TextStyle(
             color: Color(0xff67727d),
             fontWeight: FontWeight.bold,
             fontSize: 15,

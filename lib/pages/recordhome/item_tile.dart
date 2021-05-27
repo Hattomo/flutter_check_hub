@@ -22,7 +22,6 @@ class _ItemTileState extends State<ItemTile> {
   final _formKey = GlobalKey<FormState>();
   final DatabaseServiceItem databaseServiceItem = DatabaseServiceItem();
   DatabaseKey databaseKey = DatabaseKey();
-  bool _isAutovalidate = false;
 
   void showNumberDialog(DateTime dateTime) {
     String currentdata;
@@ -48,16 +47,9 @@ class _ItemTileState extends State<ItemTile> {
                   ),
                   Form(
                     key: _formKey,
-                    onChanged: () {
-                      final isAutovalidate = _formKey.currentState.validate();
-                      if (_isAutovalidate != isAutovalidate) {
-                        setState(() {
-                          _isAutovalidate = isAutovalidate;
-                        });
-                      }
-                    },
+                    onChanged: () {},
                     child: TextFormField(
-                      autovalidate: _isAutovalidate,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       decoration: textInputDecoration.copyWith(
                           hintText: 'Input number'),
@@ -72,11 +64,11 @@ class _ItemTileState extends State<ItemTile> {
                   ),
                   ButtonBar(
                     children: [
-                      FlatButton(
+                      TextButton(
                         child: const Text('Cancel'),
                         onPressed: () => Navigator.pop(context),
                       ),
-                      FlatButton(
+                      TextButton(
                         child: const Text('Done'),
                         onPressed: () async {
                           if (_formKey.currentState.validate()) {
@@ -110,8 +102,11 @@ class _ItemTileState extends State<ItemTile> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             child: CupertinoTheme(
               data: const CupertinoThemeData(
-                  textTheme: CupertinoTextThemeData(
-                      pickerTextStyle: TextStyle(color: Colors.blue))),
+                //primaryColor: Colors.blue,
+                textTheme: CupertinoTextThemeData(
+                    pickerTextStyle:
+                        TextStyle(color: Colors.blue, fontSize: 17)),
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -126,11 +121,11 @@ class _ItemTileState extends State<ItemTile> {
                   ),
                   ButtonBar(
                     children: [
-                      FlatButton(
+                      TextButton(
                         child: const Text('Cancel'),
                         onPressed: () => Navigator.pop(context),
                       ),
-                      FlatButton(
+                      TextButton(
                         child: const Text('Done'),
                         onPressed: () {
                           databaseServiceItem.createItemDailyData(
@@ -183,13 +178,13 @@ class _ItemTileState extends State<ItemTile> {
                 ),
                 ButtonBar(
                   children: [
-                    FlatButton(
+                    TextButton(
                       child: const Text('Cancel'),
                       onPressed: () {
                         Navigator.pop(context);
                       },
                     ),
-                    FlatButton(
+                    TextButton(
                       child: const Text('Done'),
                       onPressed: () {
                         if (_formKey.currentState.validate()) {
@@ -252,12 +247,12 @@ class _ItemTileState extends State<ItemTile> {
                     ),
                     ButtonBar(
                       children: [
-                        FlatButton(
+                        TextButton(
                             child: const Text('Cancel'),
                             onPressed: () => Navigator.pop(context)),
-                        FlatButton(
+                        TextButton(
                           child: const Text('Delete'),
-                          textColor: Colors.red,
+                          style: TextButton.styleFrom(primary: Colors.red),
                           onPressed: () {
                             databaseServiceItem.deleteItemData(
                               user: User(
@@ -269,12 +264,13 @@ class _ItemTileState extends State<ItemTile> {
                               ),
                               item: Item(id: widget.itemdata.id),
                             );
-                            CloudFunctions(region: 'asia-northeast1')
-                                .getHttpsCallable(
-                                    functionName: 'recursivedeleteitemdata')
+                            FirebaseFunctions.instanceFor(
+                                    region: 'asia-northeast1')
+                                .httpsCallable('recursivedeleteitemdata')
                                 .call(<String, dynamic>{
                               'documentId': widget.itemdata.id,
                             });
+
                             Navigator.pop(context);
                           },
                         ),

@@ -10,6 +10,7 @@ class AuthHome extends StatelessWidget {
     return Container(
       child: StreamProvider<User>.value(
         value: AuthService().user,
+        initialData: null,
         child: Container(
           child: AuthWrapper(),
         ),

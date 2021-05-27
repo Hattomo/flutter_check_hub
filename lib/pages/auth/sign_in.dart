@@ -48,10 +48,14 @@ class _SignInState extends State<SignIn> {
                     children: <Widget>[
                       Align(
                         alignment: Alignment.centerRight,
-                        child: FlatButton.icon(
+                        child: TextButton.icon(
                           icon: const Icon(Icons.person),
                           label: const Text('Register'),
-                          color: Colors.pinkAccent[100],
+                          style: TextButton.styleFrom(
+                              backgroundColor: Colors.pink[300],
+                              primary: Colors.white
+                              //onSurface: Colors.white
+                              ),
                           onPressed: () => widget.toggleView(),
                         ),
                       ),
@@ -81,8 +85,8 @@ class _SignInState extends State<SignIn> {
                         },
                       ),
                       const SizedBox(height: 20.0),
-                      RaisedButton(
-                          color: Colors.pink,
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(primary: Colors.pink),
                           child: const Text(
                             'Sign In',
                             style: TextStyle(color: Colors.white),

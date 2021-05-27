@@ -46,10 +46,12 @@ class _RegisterState extends State<Register> {
                   children: <Widget>[
                     Align(
                       alignment: Alignment.centerRight,
-                      child: FlatButton.icon(
+                      child: TextButton.icon(
                         icon: const Icon(Icons.person),
                         label: const Text('Sign In'),
-                        color: Colors.pinkAccent[100],
+                        style: TextButton.styleFrom(
+                            backgroundColor: Colors.pinkAccent[100],
+                            primary: Colors.white),
                         onPressed: () => widget.toggleView(),
                       ),
                     ),
@@ -78,8 +80,8 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                     const SizedBox(height: 20.0),
-                    RaisedButton(
-                        color: Colors.pink,
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.pink),
                         child: const Text(
                           'Register',
                           style: TextStyle(color: Colors.white),

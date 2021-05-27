@@ -40,7 +40,7 @@ class _EditItemHomeState extends State<EditItemHome> {
         ),
         title: const Text('Create Item'),
         actions: [
-          FlatButton(
+          TextButton(
             child: const Text('Done'),
             onPressed: () async {
               if (_formKey.currentState.validate() && currentdataType != null) {
