@@ -1,4 +1,4 @@
-package com.example.flutter_check_hub
+package com.hattomo.flutter_check_hub
 
 import io.flutter.embedding.android.FlutterActivity
 

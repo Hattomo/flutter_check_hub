@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.flutter_check_hub">
+    package="com.hattomo.flutter_check_hub">
    <application
         android:label="flutter_check_hub"
         android:name="${applicationName}"
