@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_check_hub/pages/auth/auth_home.dart';
 import 'package:flutter_check_hub/pages/home.dart';
 import 'package:flutter_check_hub/pages/setting/itemsetting/data_type_setting.dart';

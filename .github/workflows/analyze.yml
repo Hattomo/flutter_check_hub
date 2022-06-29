@@ -1,3 +1,5 @@
+# https://github.com/marketplace/actions/flutter-action
+
 name: flutter lint
 
 on: [push,pull_request]
@@ -21,12 +23,12 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      
+
       #enable linux,macos,windows   and  web
       #- run: flutter  config --enable-web
       #- run: flutter  config --enable-linux-desktop
       #- run: flutter  config --enable-macos-desktop
       #- run: flutter  config --enable-windows-desktop
-      
+
       - run: flutter pub get
       - run: flutter analyze

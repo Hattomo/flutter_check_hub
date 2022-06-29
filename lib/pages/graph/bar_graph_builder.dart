@@ -175,7 +175,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                               show: true,
                               bottomTitles: SideTitles(
                                 showTitles: true,
-                                getTextStyles: (value) => const TextStyle(
+                                getTextStyles: (context, value) => const TextStyle(
                                     color: Color(0xff7589a2),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14),
@@ -205,7 +205,7 @@ class BarGraphBuilderState extends State<BarGraphBuilder> {
                               ),
                               leftTitles: SideTitles(
                                 showTitles: true,
-                                getTextStyles: (value) => const TextStyle(
+                                getTextStyles: (context, value) => const TextStyle(
                                     color: Color(0xff7589a2),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14),

@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -40,25 +41,7 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Windows and Linux are still early preview.
-# After alpha release, it will erase.
-/windows
-/linux
-
-# google-services.json
-/android/app/google-services.json
-
-# GCP (firebase files)
-/functions
-/.firebaserc
-/database.rules.json
-/firebase.json
-/firestore.indexes.json
-/firestore.rules
-/storage.rules
-
-# my note 
-/note
-
-# Exceptions to above rules.
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
