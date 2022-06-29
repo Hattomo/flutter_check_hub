@@ -9,7 +9,7 @@ This is flutter Life Log & ToDo app 🐣
 ![flutter build Web](https://github.com/Hattomo/flutter_check_hub/workflows/flutter%20build%20web/badge.svg)
 ![flutter Test](https://github.com/Hattomo/flutter_check_hub/workflows/flutter%20test/badge.svg)
 ![flutter Analyze](https://github.com/Hattomo/flutter_check_hub/workflows/Code%20Analyze/badge.svg)
-
+[![flutter build macOS](https://github.com/Hattomo/flutter_check_hub/actions/workflows/macOS_build.yml/badge.svg)](https://github.com/Hattomo/flutter_check_hub/actions/workflows/macOS_build.yml)
 <!--
 ## WIP in very early stage 🐣
 flutter Life Log & ToDo app
