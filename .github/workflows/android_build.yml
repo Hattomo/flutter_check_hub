@@ -1,6 +1,6 @@
 name: flutter build Android
 
-on: [push,pull_request]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -11,55 +11,29 @@ jobs:
     #Identifies any jobs that must complete successfully before this job will run.
 
     steps:
-      - name: Set up environment
-        uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
         with:
-          channel: 'beta'
-      # This action sets up a java environment
-      # https://github.com/actions/setup-java
-      - uses: actions/setup-java@v1
+          distribution: "zulu"
+          java-version: "12"
+      - uses: subosito/flutter-action@v2
         with:
-          java-version: '12.x'
-      
-      #enable linux,macos,windows   and  web
-      #- run: flutter  config --enable-web
-      #- run: flutter  config --enable-linux-desktop
-      #- run: flutter  config --enable-macos-desktop
-      #- run: flutter  config --enable-windows-desktop
-      
+          channel: 'stable'
       # copy google service.json
       - name: Decode google-service.json
         env:
           GOOGLE_SERVICE: ${{secrets.GOOGLE_SERVICES_JSON}}
         run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./android/app/google-services.json
-      
-      - name: pub get 
-        run: flutter pub get
-      
-      # Do not have test code
-      #- run: flutter test
-      
-      # build macOS desktop version
-      #- run: flutter build macos --release
+      - run: flutter pub get
+      - run: flutter build apk
+      - run: flutter build appbundle
 
-      - name: build Android apk
-        run: flutter build apk
-      # This action will create a github release and optionally upload an artifact to it.
-      # https://github.com/ncipollo/release-action
-      
-      # build Flutter web version
-      #- run: flutter build web
-      
-      # To support 
-      # https://qiita.com/peaceiris/items/28e302996ccf04551434
-      # https://scrapbox.io/jiro4989/GitHubActions%E3%81%A7skip_ci%E3%81%8C%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E3%83%A1%E3%83%83%E3%82%BB%E3%83%BC%E3%82%B8%E3%81%AB%E5%90%AB%E3%81%BE%E3%82%8C%E3%82%8B%E6%99%82%E3%81%AF%E3%82%B8%E3%83%A7%E3%83%96%E3%82%92%E3%82%B9%E3%82%AD%E3%83%83%E3%83%97%E3%81%99%E3%82%8B%E8%A8%AD%E5%AE%9A
-      # https://medium.com/mobile-development-group/github-actions-for-flutter-cf02923d7b5d
-      #- uses: actions/upload-artifact@v1
-      #  with:
-      #    name: release-apk
-      #    path: build/app/outputs/apk/release/app-release.apk
+        # To support
+        # https://medium.com/mobile-development-group/github-actions-for-flutter-cf02923d7b5d
+        #- uses: actions/upload-artifact@v1
+        #  with:
+        #    name: release-apk
+        #    path: build/app/outputs/apk/release/app-release.apk
 
-      # Handle the deploy process of your project to GitHub Pages.
-      # https://github.com/JamesIves/github-pages-deploy-action
-      
+        # Handle the deploy process of your project to GitHub Pages.
+        # https://github.com/JamesIves/github-pages-deploy-action
