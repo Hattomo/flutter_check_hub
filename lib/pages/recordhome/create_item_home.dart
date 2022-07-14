@@ -56,7 +56,7 @@ class _CreateItemHomeState extends State<CreateItemHome> {
                     title: currenttitle,
                     icon: currenticon,
                     unit: currentunit,
-                    dataType: 'Number',
+                    dataType: currentdataType,
                   ),
                 );
                 Navigator.pop(context);
